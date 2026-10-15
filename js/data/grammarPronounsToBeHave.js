@@ -595,6 +595,7 @@ const GrammarPronounsToBeHave = {
     install() {
 
         StarterPackSync.install(this);
+        StarterPackSync.removeLegacyDemoEnglish();
 
     }
 

@@ -303,6 +303,83 @@ const StarterPackSync = {
             `${synchronizedIds.length} question(s).`
         );
 
+    },
+
+
+    // -----------------------------------------------------
+    // REMOVE LEGACY DEMO ENGLISH SET
+    // -----------------------------------------------------
+
+    removeLegacyDemoEnglish() {
+
+        const data = Storage.getData();
+
+        if (!Array.isArray(data.questionSets)) {
+            return;
+        }
+
+        const obsoleteSetId = "demo_english";
+
+        const obsoleteSet = data.questionSets.find(
+            set => set.id === obsoleteSetId
+        );
+
+        if (!obsoleteSet) {
+            return;
+        }
+
+        const questionIds = new Set(
+            Array.isArray(obsoleteSet.questionIds)
+                ? obsoleteSet.questionIds
+                : []
+        );
+
+        // Remove only the obsolete set.
+        data.questionSets = data.questionSets.filter(
+            set => set.id !== obsoleteSetId
+        );
+
+        // Find questions still used by other sets.
+        const referencedQuestionIds = new Set();
+
+        data.questionSets.forEach(set => {
+
+            if (Array.isArray(set.questionIds)) {
+                set.questionIds.forEach(id => {
+                    referencedQuestionIds.add(id);
+                });
+            }
+
+        });
+
+        // Delete only questions exclusive to Demo English
+        // that are not referenced by any remaining set.
+        data.questions = data.questions.filter(question => {
+
+            if (!questionIds.has(question.id)) {
+                return true;
+            }
+
+            if (referencedQuestionIds.has(question.id)) {
+                return true;
+            }
+
+            // Never delete a question that belongs to a
+            // synchronized starter pack.
+            if (question.sourcePackId) {
+                return true;
+            }
+
+            return false;
+
+        });
+
+        Storage.saveData(data);
+
+        console.info(
+            'StarterPackSync: legacy "Demo English" removed.'
+        );
+
     }
 
 };

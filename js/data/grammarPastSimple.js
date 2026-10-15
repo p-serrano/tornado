@@ -417,6 +417,7 @@ const GrammarPastSimple = {
     install() {
 
         StarterPackSync.install(this);
+        StarterPackSync.removeLegacyDemoEnglish();
 
     }
 

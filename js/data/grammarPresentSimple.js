@@ -301,6 +301,7 @@ const GrammarPresentSimple = {
     install() {
 
         StarterPackSync.install(this);
+        StarterPackSync.removeLegacyDemoEnglish();
 
     }
 
