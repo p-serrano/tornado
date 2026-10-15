@@ -4,11 +4,14 @@ const AppState = {
     initialized: false,
 
     init() {
-        const context = Storage.getContext();
+        // Always start from the home screen.
+        this.currentView = "home";
+        this.currentGameId = null;
 
-        this.currentView = context.currentView || "home";
-        this.currentGameId = context.currentGameId || null;
         this.initialized = true;
+
+        // Save the initial context.
+        this.saveContext();
     },
 
     saveContext() {
