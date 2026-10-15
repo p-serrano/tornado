@@ -1,0 +1,125 @@
+/* =========================================================
+   TORNADO — BEAUTIFUL CHAOS
+   VISUAL IDENTITY: PUNK × COMIC
+========================================================= */
+
+:root {
+
+    /* -----------------------------------------------------
+       CORE COLOURS
+    ----------------------------------------------------- */
+
+    --ink: #21182A;
+    --background: #FFF8E8;
+
+    --surface: #FFFFFF;
+    --surface-dark: #35145C;
+
+
+    /* -----------------------------------------------------
+       ELECTRIC COLOUR PALETTE
+    ----------------------------------------------------- */
+
+    --acid-yellow: #FFF000;
+    --electric-pink: #FF3CAC;
+    --electric-purple: #8B35F2;
+    --electric-blue: #19C8FF;
+    --acid-green: #B6FF36;
+
+
+    /* -----------------------------------------------------
+       SOFT COLOURS
+    ----------------------------------------------------- */
+
+    --soft-lilac: #DCC6FF;
+    --soft-pink: #FFD1E8;
+    --soft-blue: #C9F3FF;
+    --soft-yellow: #FFF4A8;
+    --soft-green: #E4FFB8;
+
+
+    /* -----------------------------------------------------
+       TEXT COLOURS
+    ----------------------------------------------------- */
+
+    --text-main: #21182A;
+    --text-muted: #65566D;
+    --text-light: #FFF8E8;
+
+
+    /* -----------------------------------------------------
+       SEMANTIC COLOURS
+    ----------------------------------------------------- */
+
+    --success: var(--acid-green);
+    --danger: var(--electric-pink);
+    --warning: var(--acid-yellow);
+
+
+    /* -----------------------------------------------------
+       TYPOGRAPHY
+    ----------------------------------------------------- */
+
+    --font-display: "Rubik Dirt", cursive;
+    --font-ui: "Road Rage", sans-serif;
+
+
+    /* -----------------------------------------------------
+       BORDERS
+    ----------------------------------------------------- */
+
+    --border: 3px solid var(--ink);
+    --border-thick: 4px solid var(--ink);
+    --border-thin: 2px solid var(--ink);
+
+
+    /* -----------------------------------------------------
+       COMIC SHADOWS
+    ----------------------------------------------------- */
+
+    --shadow-sm: 3px 3px 0 var(--ink);
+    --shadow-md: 5px 5px 0 var(--ink);
+    --shadow-lg: 7px 7px 0 var(--ink);
+
+
+    /* -----------------------------------------------------
+       COLOURED SHADOWS
+    ----------------------------------------------------- */
+
+    --shadow-pink: 5px 5px 0 var(--electric-pink);
+    --shadow-yellow: 5px 5px 0 var(--acid-yellow);
+    --shadow-green: 5px 5px 0 var(--acid-green);
+    --shadow-purple: 5px 5px 0 var(--electric-purple);
+    --shadow-blue: 5px 5px 0 var(--electric-blue);
+
+
+    /* -----------------------------------------------------
+       BORDER RADIUS
+    ----------------------------------------------------- */
+
+    --radius-sm: 4px;
+    --radius-md: 8px;
+    --radius-lg: 12px;
+
+
+    /* -----------------------------------------------------
+       SPACING
+    ----------------------------------------------------- */
+
+    --space-1: 4px;
+    --space-2: 8px;
+    --space-3: 12px;
+    --space-4: 16px;
+    --space-5: 20px;
+    --space-6: 24px;
+    --space-8: 32px;
+
+
+    /* -----------------------------------------------------
+       TRANSITIONS
+    ----------------------------------------------------- */
+
+    --transition-fast: 150ms ease;
+    --transition-normal: 220ms ease;
+
+}

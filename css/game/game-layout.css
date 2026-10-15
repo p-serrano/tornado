@@ -1,0 +1,1022 @@
+/* =========================================================
+   TORNADO — BEAUTIFUL CHAOS
+   GAME LAYOUT
+========================================================= */
+
+
+/* =========================================================
+   1. GAME SCREEN LAYOUT
+========================================================= */
+
+html,
+body {
+    min-height: 100%;
+    margin: 0;
+    background: var(--ink);
+}
+
+#app {
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: var(--ink);
+}
+
+.game-screen {
+    position: relative;
+    isolation: isolate;
+
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    max-width: 1600px;
+
+    min-height: 100vh;
+    min-height: 100dvh;
+
+    margin: 0 auto;
+    padding: 12px 24px 20px;
+
+    box-sizing: border-box;
+
+    background: var(--ink);
+    color: var(--soft-lilac);
+}
+
+/* Background logo */
+
+.game-screen::before {
+    content: "";
+
+    position: absolute;
+    z-index: -1;
+
+    top: 50%;
+    left: 50%;
+
+    width: min(75vw, 650px);
+    aspect-ratio: 1;
+
+    background-image: url("../../assets/images/tornado-logo.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+
+    opacity: 0.035;
+
+    transform: translate(-50%, -50%) rotate(-12deg);
+
+    pointer-events: none;
+    user-select: none;
+}
+
+/* Pink geometric decoration */
+
+.game-screen::after {
+    content: "";
+
+    position: absolute;
+    z-index: -1;
+
+    top: 40px;
+    right: 40px;
+
+    width: 180px;
+    height: 180px;
+
+    box-sizing: border-box;
+
+    border: 3px solid var(--electric-pink);
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 0 15px var(--ink),
+        0 0 0 18px var(--electric-pink);
+
+    opacity: 0.15;
+
+    pointer-events: none;
+}
+
+.game-header,
+.scoreboard {
+    flex-shrink: 0;
+}
+
+
+/* =========================================================
+   2. GAME HEADER
+========================================================= */
+
+.game-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 16px;
+
+    margin-bottom: 14px;
+}
+
+.game-header-brand {
+    display: flex;
+    align-items: center;
+
+    min-width: 0;
+}
+
+.game-logo {
+    display: block;
+
+    width: clamp(100px, 12vw, 160px);
+    max-width: 100%;
+    height: auto;
+
+    object-fit: contain;
+}
+
+.game-menu-button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    flex-shrink: 0;
+
+    min-height: 44px;
+    padding: 8px 16px;
+
+    border: var(--border-thin);
+    border-radius: var(--radius-sm);
+
+    background: var(--soft-blue);
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: 1.25rem;
+    font-weight: 800;
+    line-height: 1;
+
+    box-shadow: var(--shadow-sm);
+
+    cursor: pointer;
+
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+.game-menu-button:hover {
+    background: var(--electric-pink);
+
+    transform: translate(-2px, -2px);
+
+    box-shadow: var(--shadow-md);
+}
+
+.game-menu-button:active {
+    transform: translate(1px, 1px);
+
+    box-shadow: none;
+}
+
+.game-menu-button:focus-visible {
+    outline: 3px solid var(--acid-yellow);
+    outline-offset: 4px;
+}
+
+
+/* =========================================================
+   3. SCOREBOARD
+========================================================= */
+
+.scoreboard {
+    display: grid;
+
+    grid-template-columns:
+        repeat(auto-fit, minmax(min(100%, 125px), 1fr));
+
+    gap: 12px;
+
+    margin-bottom: 16px;
+}
+
+.score-card {
+    position: relative;
+
+    min-width: 0;
+
+    padding: 10px 12px;
+
+    border: var(--border);
+    border-radius: var(--radius-sm);
+
+    background: var(--soft-lilac);
+
+    box-shadow: var(--shadow-sm);
+
+    text-align: center;
+
+    transition:
+        transform var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+.score-card:nth-child(4n + 2) {
+    background: var(--soft-pink);
+}
+
+.score-card:nth-child(4n + 3) {
+    background: var(--soft-blue);
+}
+
+.score-card:nth-child(4n + 4) {
+    background: var(--soft-yellow);
+}
+
+/* =========================================================
+   CURRENT TEAM — PUNK TURN INDICATOR
+========================================================= */
+
+.score-card.current {
+    position: relative;
+    z-index: 2;
+
+    background: var(--acid-yellow);
+
+    box-shadow:
+        4px 4px 0 var(--electric-pink);
+
+    animation: current-team-pulse 1.6s ease-in-out infinite;
+}
+
+
+/* =========================================================
+   NOW LABEL
+========================================================= */
+
+.score-card.current::after {
+    content: "▼ NOW ▼";
+
+    position: absolute;
+
+    top: -19px;
+    right: 5px;
+
+    padding: 6px 10px;
+
+    border: 2px solid var(--ink);
+
+    background: var(--electric-pink);
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: 1.1rem;
+    font-weight: 900;
+    line-height: 1;
+
+    letter-spacing: .06em;
+    white-space: nowrap;
+
+    box-shadow: 3px 3px 0 var(--ink);
+
+    transform-origin: center;
+
+    animation: current-team-marker-pulse 800ms ease-in-out infinite;
+}
+
+
+/* =========================================================
+   CARD PULSE
+========================================================= */
+
+@keyframes current-team-pulse {
+    0%, 100% {
+        box-shadow:
+            4px 4px 0 var(--electric-pink),
+            0 0 0 0 rgb(255 230 80 / 0%);
+    }
+
+    50% {
+        box-shadow:
+            4px 4px 0 var(--electric-pink),
+            0 0 14px 4px rgb(255 230 80 / 65%);
+    }
+}
+
+
+/* =========================================================
+   PUNK MARKER PULSE
+========================================================= */
+
+@keyframes current-team-marker-pulse {
+    0%, 100% {
+        transform: translateY(0) scale(1);
+    }
+
+    50% {
+        transform: translateY(-3px) scale(1.06);
+    }
+}
+
+
+/* =========================================================
+   ACCESSIBILITY
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+    .score-card.current,
+    .score-card.current::after {
+        animation: none !important;
+    }
+}
+
+.score-team {
+    margin-bottom: 7px;
+
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: clamp(1.9rem, 2.2vw, 2.2rem);
+    font-weight: 800;
+    line-height: 1.15;
+
+    overflow-wrap: anywhere;
+}
+
+.score-value {
+    color: var(--electric-purple);
+
+    font-family: var(--font-ui);
+    font-size: clamp(1.6rem, 2.5vw, 2.5rem);
+    font-weight: 900;
+    line-height: 1;
+
+    font-variant-numeric: tabular-nums;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   4. TURN PANEL
+========================================================= */
+
+.turn-panel {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 10px;
+
+    margin-bottom: 14px;
+    padding: 10px 16px;
+
+    border: var(--border);
+    border-radius: var(--radius-sm);
+
+    background: var(--electric-purple);
+    color: #FFFFFF;
+
+    box-shadow: 4px 4px 0 var(--acid-yellow);
+
+    text-align: center;
+}
+
+.turn-panel .turn-label {
+    margin: 0;
+
+    color: var(--acid-yellow);
+
+    font-family: var(--font-ui);
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+
+    letter-spacing: .08em;
+}
+
+.turn-team {
+    margin: 0;
+
+    color: #FFFFFF;
+
+    font-family: var(--font-ui);
+    font-size: clamp(1.4rem, 3vw, 2.2rem);
+    font-weight: 900;
+    line-height: 1.05;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   5. QUESTION CARDS
+========================================================= */
+
+.game-question-card,
+.reveal-card {
+    position: relative;
+
+    width: 100%;
+    max-width: 1100px;
+
+    margin: 0 auto 14px;
+    padding: clamp(18px, 3vw, 32px);
+
+    box-sizing: border-box;
+
+    border: var(--border-thick);
+    border-radius: var(--radius-md);
+
+    background: var(--soft-yellow);
+
+    box-shadow: var(--shadow-md);
+}
+
+.game-question-card::before {
+    content: "?";
+
+    position: absolute;
+
+    top: -12px;
+    right: 14px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 36px;
+    height: 36px;
+
+    box-sizing: border-box;
+
+    border: var(--border);
+    border-radius: 50%;
+
+    background: var(--electric-pink);
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+
+    transform: rotate(8deg);
+}
+
+.game-question-card > .turn-label {
+    margin: 0 0 12px;
+
+    color: var(--electric-purple);
+
+    font-family: var(--font-ui);
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+
+    letter-spacing: .08em;
+}
+
+.question-text {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: clamp(1.6rem, 3.2vw, 3rem);
+    font-weight: 400;
+    line-height: 1.15;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   QUESTION CARD — CONTENT LAYOUT
+========================================================= */
+
+.game-question-card {
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    gap: 14px;
+}
+
+/* QUESTION label */
+
+.game-question-card > .turn-label {
+    align-self: flex-start;
+    width: fit-content;
+    margin: 0;
+}
+
+/* Question text */
+
+.game-question-card > .question-text {
+    display: block;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+}
+
+/* Answer container */
+
+.game-question-card > .answer-box {
+    display: block;
+    width: 100%;
+    margin: 0;
+    text-align: center;
+}
+
+/* Correct / Incorrect buttons */
+
+.game-question-card > .game-actions {
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: stretch;
+    flex-wrap: wrap;
+    gap: 16px;
+    width: 100%;
+    margin-top: 8px;
+}
+
+.game-question-card > .game-actions > button {
+    flex: 1 1 200px;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   6. ANSWER
+========================================================= */
+
+.answer-box {
+    margin-top: 18px;
+    padding: 14px 18px;
+
+    border: var(--border-thin);
+    border-radius: var(--radius-sm);
+
+    background: var(--soft-pink);
+
+    box-shadow: var(--shadow-sm);
+}
+
+.answer-label {
+    margin-bottom: 6px;
+
+    color: var(--electric-purple);
+
+    font-family: var(--font-ui);
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+
+    text-transform: uppercase;
+    letter-spacing: .06em;
+}
+
+.answer-text {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: clamp(1.3rem, 2.4vw, 2rem);
+    font-weight: 700;
+    line-height: 1.25;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   7. GAME ACTIONS
+========================================================= */
+
+.game-actions {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    margin: 20px 0 2px;
+}
+
+.game-actions button {
+    display: inline-flex;
+    justify-content: center;
+    align-items: center;
+
+    min-height: 48px;
+    max-width: 100%;
+
+    padding: 12px 22px;
+
+    border: var(--border);
+    border-radius: var(--radius-sm);
+
+    font-family: var(--font-ui);
+    font-size: clamp(1rem, 1.8vw, 1.4rem);
+    font-weight: 900;
+    line-height: 1.1;
+
+    text-align: center;
+
+    overflow-wrap: anywhere;
+
+    box-shadow: var(--shadow-sm);
+
+    cursor: pointer;
+
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+.game-actions button:hover {
+    transform: translate(-2px, -2px);
+
+    box-shadow: var(--shadow-md);
+}
+
+.game-actions button:active {
+    transform: translate(1px, 1px);
+
+    box-shadow: none;
+}
+
+.game-actions button:focus-visible {
+    outline: 3px solid var(--electric-purple);
+    outline-offset: 3px;
+}
+
+.game-actions .primary-button {
+    background: var(--acid-yellow);
+    color: var(--ink);
+}
+
+.game-actions .primary-button:hover {
+    background: var(--electric-pink);
+}
+
+.game-actions .secondary-button {
+    background: var(--soft-blue);
+    color: var(--ink);
+}
+
+.game-actions .secondary-button:hover {
+    background: var(--electric-blue);
+}
+
+.game-actions .correct-button {
+    background: var(--acid-green);
+    color: var(--ink);
+}
+
+.game-actions .correct-button:hover {
+    background: var(--acid-yellow);
+}
+
+.game-actions .incorrect-button {
+    background: var(--electric-pink);
+    color: var(--ink);
+}
+
+.game-actions .incorrect-button:hover {
+    background: var(--acid-yellow);
+}
+
+
+/* =========================================================
+   RESPONSIVE — TABLETS AND MOBILE
+   LAYOUT, HEADER, SCOREBOARD, QUESTIONS AND ACTIONS
+========================================================= */
+
+@media (max-width: 600px) {
+
+    /* GAME SCREEN */
+
+    .game-screen {
+        padding: 10px 12px 16px;
+    }
+
+    /* HEADER */
+
+    .game-header {
+        gap: 10px;
+        margin-bottom: 14px;
+    }
+
+    .game-logo {
+        width: clamp(90px, 25vw, 140px);
+    }
+
+    .game-menu-button {
+        min-height: 42px;
+        padding: 8px 12px;
+        font-size: 1.5rem;
+    }
+
+    /* SCOREBOARD */
+
+    .scoreboard {
+        grid-template-columns:
+            repeat(auto-fit, minmax(min(100%, 100px), 1fr));
+
+        gap: 8px;
+        margin-bottom: 16px;
+    }
+
+    .score-card {
+        padding: 10px 8px;
+    }
+
+    .score-card.current {
+        box-shadow: 3px 3px 0 var(--electric-pink);
+    }
+
+    .score-card.current::after {
+        top: -9px;
+        right: 3px;
+
+        padding: 4px 6px;
+
+        font-size: 1.5rem;
+        font-weight: 900;
+        line-height: 1;
+
+        letter-spacing: 0.04em;
+    }
+
+    .score-team {
+        margin-bottom: 6px;
+
+        font-size: clamp(1.1rem, 4.5vw, 1.4rem);
+        font-weight: 900;
+        line-height: 1.15;
+
+        overflow-wrap: anywhere;
+    }
+
+    .score-value {
+        font-size: clamp(1.3rem, 5vw, 1.8rem);
+        line-height: 1.05;
+    }
+
+    /* TURN PANEL */
+
+    .turn-panel {
+        gap: 8px;
+        padding: 10px 12px;
+    }
+
+    .turn-panel .turn-label {
+        font-size: 0.9rem;
+    }
+
+    .turn-team {
+        font-size: clamp(1.2rem, 5vw, 1.8rem);
+    }
+
+    /* QUESTION AND ANSWER */
+
+    .game-question-card,
+    .reveal-card {
+        padding: 20px 16px;
+    }
+
+    .question-text {
+        font-size: clamp(1.3rem, 5vw, 2rem);
+        line-height: 1.2;
+    }
+
+    .answer-box {
+        margin-top: 14px;
+        padding: 12px;
+    }
+
+    .answer-text {
+        font-size: clamp(1.1rem, 4vw, 1.5rem);
+    }
+
+    /* GAME ACTIONS */
+
+    .game-actions {
+        gap: 8px;
+        margin-top: 16px;
+    }
+
+    .game-actions button {
+        min-height: 44px;
+        padding: 10px 14px;
+
+        font-size: clamp(0.95rem, 3.5vw, 1.2rem);
+    }
+
+}
+
+
+/* =========================================================
+   VERY SMALL SCREENS — LAYOUT
+========================================================= */
+
+@media (max-width: 380px) {
+
+    .game-screen {
+        padding: 8px;
+    }
+
+    .game-header {
+        gap: 6px;
+    }
+
+    .game-logo {
+        width: 90px;
+    }
+
+    .game-menu-button {
+        min-height: 38px;
+        padding: 7px 9px;
+
+        font-size: 0.9rem;
+    }
+
+    /* SCOREBOARD */
+
+    .scoreboard {
+        grid-template-columns:
+            repeat(auto-fit, minmax(min(100%, 85px), 1fr));
+
+        gap: 6px;
+    }
+
+    .score-card {
+        padding: 9px 5px;
+    }
+
+    .score-card.current::after {
+        top: -8px;
+        right: 2px;
+
+        padding: 3px 5px;
+
+        font-size: 0.85rem;
+    }
+
+    .score-team {
+        font-size: 1.5rem;
+    }
+
+    .score-value {
+        font-size: 1.25rem;
+    }
+
+    /* ACTIONS */
+
+    .game-actions {
+        gap: 6px;
+    }
+
+    .game-actions button {
+        padding: 9px 10px;
+        font-size: 0.9rem;
+    }
+
+}
+
+/* =========================================================
+   SYSTEMS BACK TO NORMAL OVERLAY
+========================================================= */
+
+.normal-status-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(18, 15, 25, 0.92);
+    backdrop-filter: blur(8px);
+
+    animation: normal-status-appear 250ms ease-out both;
+}
+
+.normal-status-content {
+    width: min(760px, 100%);
+
+    padding: clamp(32px, 6vw, 64px) 24px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    color: var(--ink);
+    background: #c9f7a5;
+
+    border: 4px solid var(--ink);
+    box-shadow: 12px 12px 0 var(--ink);
+
+    animation: normal-status-impact 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.normal-status-icon {
+    width: 76px;
+    height: 76px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 24px;
+
+    border: 4px solid var(--ink);
+    border-radius: 50%;
+
+    background: var(--ink);
+    color: #c9f7a5;
+
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+.normal-status-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+}
+
+.normal-status-content h2 {
+    margin: 18px 0;
+
+    font-family: var(--font-ui);
+    font-size: clamp(2rem, 7vw, 4.5rem);
+    font-weight: 1000;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+}
+
+.normal-status-content p {
+    margin: 8px 0 0;
+
+    font-family: var(--font-ui);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 700;
+}
+
+@keyframes normal-status-appear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes normal-status-impact {
+    0% {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    70% {
+        opacity: 1;
+        transform: scale(1.04);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .normal-status-overlay,
+    .normal-status-content {
+        animation: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .normal-status-overlay {
+        padding: 16px;
+    }
+
+    .normal-status-content {
+        padding: 36px 16px;
+        box-shadow: 7px 7px 0 var(--ink);
+    }
+}

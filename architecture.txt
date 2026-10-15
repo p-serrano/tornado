@@ -1,0 +1,36 @@
+Listado de rutas de carpetas para el volumen OS
+El número de serie del volumen es EC77-A371
+C:.
+¦   architecture.txt
+¦   index.html
+¦   README.md
+¦   
++---css
+¦       base.css
+¦       game.css
+¦       layout.css
+¦       setup.css
+¦       variables.css
+¦       
++---js
+    +---core
+    ¦       appState.js
+    ¦       storage.js
+    ¦       utils.js
+    ¦       
+    +---data
+    ¦       defaultQuestions.js
+    ¦       
+    +---managers
+    ¦       gameManager.js
+    ¦       questionManager.js
+    ¦       questionSetManager.js
+    ¦       teamManager.js
+    ¦       
+    +---ui
+            app.js
+            gameView.js
+            homeView.js
+            resultsView.js
+            setupView.js
+            

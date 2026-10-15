@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <meta name="theme-color" content="#171717">
+
+    <title>Tornado — Beautiful Chaos</title>
+
+    <!-- =====================================================
+         FONTS
+    ====================================================== -->
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Road+Rage&family=Rubik+Dirt&display=swap"
+        rel="stylesheet"
+    >
+
+
+    <!-- =====================================================
+         STYLES
+    ====================================================== -->
+
+    <link rel="stylesheet" href="css/variables.css">
+    <link rel="stylesheet" href="css/base.css">
+    <link rel="stylesheet" href="css/layout.css">
+    <link rel="stylesheet" href="css/setup.css">
+    <link rel="stylesheet" href="css/home.css">
+    <link rel="stylesheet" href="css/questions.css">
+    <link rel="stylesheet" href="css/questionSets.css">
+    <link rel="stylesheet" href="css/howToPlay.css">
+
+    <link rel="stylesheet" href="css/game/game.css">
+    <link rel="stylesheet" href="css/game/game-board.css">
+    <link rel="stylesheet" href="css/game/game-effects.css">
+    <link rel="stylesheet" href="css/game/game-layout.css">
+
+    <!-- Question Bank: autocomplete -->
+    <link rel="stylesheet" href="css/questionsAutocomplete.css">
+
+</head>
+
+<body>
+
+    <div id="app"></div>
+
+
+    <!-- =====================================================
+         CORE
+    ====================================================== -->
+
+    <script src="js/core/storage.js"></script>
+    <script src="js/core/appState.js"></script>
+    <script src="js/core/utils.js"></script>
+
+
+    <!-- =====================================================
+         MANAGERS
+    ====================================================== -->
+
+    <script src="js/managers/teamManager.js"></script>
+    <script src="js/managers/questionSetManager.js"></script>
+    <script src="js/managers/questionManager.js"></script>
+    <script src="js/managers/gameManager.js"></script>
+    <script src="js/managers/questionMigration.js"></script>
+
+
+    <!-- =====================================================
+         DATA
+    ====================================================== -->
+
+    <script src="js/data/starterPackSync.js"></script>
+    <script src="js/data/grammarPresentSimple.js"></script>
+    <script src="js/data/grammarPastSimple.js"></script>
+    <script src="js/data/grammarPronounsToBeHave.js"></script>
+
+
+    <!-- =====================================================
+         UI — GAME
+    ====================================================== -->
+
+    <script src="js/ui/gameMessageView.js"></script>
+    <script src="js/ui/homeView.js"></script>
+    <script src="js/ui/setupView.js"></script>
+    <script src="js/ui/gameView.js"></script>
+    <script src="js/ui/resultsView.js"></script>
+    <script src="js/ui/howToPlayView.js"></script>
+
+
+    <!-- =====================================================
+         UI — QUESTION BANK
+    ====================================================== -->
+
+    <script src="js/ui/questions/questionTagCatalog.js"></script>
+    <script src="js/ui/questions/questionsView.js"></script>
+    <script src="js/ui/questions/questionsAutocomplete.js"></script>
+    <script src="js/ui/questions/questionsFilters.js"></script>
+    <script src="js/ui/questions/questionsForm.js"></script>
+    <script src="js/ui/questions/questionSetsView.js"></script>
+
+
+    <!-- =====================================================
+         APP
+    ====================================================== -->
+
+    <script src="js/ui/app.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,458 @@
+/* =========================================================
+   TORNADO — BEAUTIFUL CHAOS
+   GAME BOARD
+========================================================= */
+
+
+/* =========================================================
+   1. BOARD
+========================================================= */
+
+.board {
+    /*
+       Valores de respaldo.
+       GameView establece las dimensiones reales en línea.
+    */
+
+    --board-columns: 5;
+    --board-rows: 5;
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(var(--board-columns), minmax(0, 1fr));
+
+    grid-template-rows:
+        repeat(var(--board-rows), minmax(0, 1fr));
+
+    /*
+       El tablero puede crecer en altura.
+       No se fuerza a ocupar un espacio imposible.
+    */
+
+    flex: 1 1 0;
+
+    min-width: 0;
+    min-height: 0;
+
+    width: min(100%, 1000px);
+
+    margin: 0 auto;
+    padding: 8px;
+
+    gap: 8px;
+
+    box-sizing: border-box;
+
+    border: var(--border-thick);
+    border-radius: var(--radius-md);
+
+    background: var(--electric-purple);
+
+    box-shadow: var(--shadow-md);
+}
+
+
+/* =========================================================
+   2. BOARD PHASE HEADER
+========================================================= */
+
+.board-phase-header {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-wrap: wrap;
+
+    gap: 12px;
+
+    width: fit-content;
+    max-width: calc(100% - 24px);
+
+    margin: 0 auto 18px;
+    padding: 12px 20px;
+
+    box-sizing: border-box;
+
+    background: var(--electric-blue);
+
+    border: 3px solid var(--ink);
+
+    box-shadow: 5px 5px 0 var(--ink);
+
+    transform: rotate(-1deg);
+}
+
+.board-phase-header h2 {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-family: var(--font-display);
+    font-size: clamp(1.1rem, 2.4vw, 1.8rem);
+    line-height: 1.1;
+
+    text-align: center;
+    text-transform: uppercase;
+}
+
+.phase-badge {
+    display: inline-block;
+
+    flex-shrink: 0;
+
+    padding: 9px 12px;
+
+    background: var(--ink);
+    color: var(--acid-yellow);
+
+    font-family: var(--font-ui);
+    font-size: 1.9rem;
+    font-weight: 900;
+    line-height: 1.1;
+
+    letter-spacing: .06em;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   3. TILES
+========================================================= */
+
+.tile {
+    position: relative;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    padding: 18px 4px 4px;
+
+    box-sizing: border-box;
+
+    border: var(--border);
+    border-radius: var(--radius-sm);
+
+    background: var(--acid-yellow);
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: clamp(.85rem, 2.4vh, 2rem);
+    font-weight: 900;
+    line-height: 1;
+
+    overflow: hidden;
+
+    box-shadow: 3px 3px 0 var(--electric-pink);
+
+    cursor: pointer;
+
+    transition:
+        transform var(--transition-fast),
+        background-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+.tile:not(:disabled):hover {
+    z-index: 1;
+
+    background: var(--electric-blue);
+
+    transform: translate(-2px, -2px);
+
+    box-shadow: 4px 4px 0 var(--acid-green);
+}
+
+.tile:not(:disabled):active {
+    transform: scale(.96);
+
+    box-shadow: 1px 1px 0 var(--ink);
+}
+
+.tile:focus-visible {
+    z-index: 2;
+
+    outline: 3px solid var(--electric-pink);
+    outline-offset: -5px;
+}
+
+
+/* =========================================================
+   4. TILE COORDINATES AND CONTENT
+========================================================= */
+
+.tile-coordinate {
+    position: absolute;
+
+    top: 5px;
+    left: 5px;
+
+    z-index: 2;
+
+    max-width: calc(100% - 10px);
+
+    padding: 4px 6px;
+
+    box-sizing: border-box;
+
+    background: var(--electric-blue);
+    color: var(--ink);
+
+    font-family: var(--font-ui), monospace;
+    font-size: clamp(1.9rem, 2.2vw, 2.2rem);
+    font-weight: 900;
+    line-height: 1.1;
+
+    letter-spacing: .06em;
+
+    transform: rotate(-2deg);
+
+    opacity: .95;
+
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+
+    pointer-events: none;
+    user-select: none;
+}
+
+.tile-content {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    width: 100%;
+    height: 100%;
+
+    min-width: 0;
+    min-height: 0;
+
+    font-size: clamp(1.4rem, 3.5vh, 2.8rem);
+    font-weight: 900;
+    line-height: 1.1;
+
+    overflow-wrap: anywhere;
+    text-align: center;
+
+    pointer-events: none;
+}
+
+
+/* =========================================================
+   5. REVEALED TILES
+========================================================= */
+
+.tile.revealed {
+    background: var(--surface);
+    color: var(--ink);
+
+    box-shadow: none;
+
+    cursor: default;
+
+    animation: tile-reveal .3s ease both;
+}
+
+.tile.revealed.score {
+    background: var(--acid-green);
+    color: var(--ink);
+}
+
+.tile.revealed.double {
+    background: var(--acid-green);
+    color: var(--ink);
+}
+
+.tile.revealed.half {
+    background: var(--acid-green);
+    color: var(--ink);
+}
+
+.tile.revealed.swap {
+    background: var(--acid-green);
+    color: var(--ink);
+}
+
+.tile.revealed.tornado {
+    background: var(--acid-green);
+    color: var(--ink);
+
+    box-shadow: inset 0 0 0 4px var(--electric-pink);
+}
+
+
+/* =========================================================
+   6. DESTROYED TILES
+========================================================= */
+
+.tile.revealed.destroyed {
+    background: #65566D;
+    color: var(--text-light);
+
+    border-color: var(--electric-pink);
+
+    box-shadow: none;
+
+    cursor: default;
+}
+
+.tile.revealed.destroyed .tile-coordinate {
+    background: var(--electric-pink);
+    color: var(--ink);
+}
+
+
+/* =========================================================
+   7. TILE ANIMATIONS
+========================================================= */
+
+@keyframes tile-reveal {
+    from {
+        opacity: .65;
+        transform: scale(.94);
+    }
+
+    to {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+
+/* =========================================================
+   8. RESPONSIVE — TABLETS AND MOBILE
+========================================================= */
+
+@media (max-width: 600px) {
+
+    /* BOARD PHASE HEADER */
+
+    .board-phase-header {
+        gap: 8px;
+
+        max-width: calc(100% - 12px);
+
+        margin-bottom: 14px;
+        padding: 10px 12px;
+
+        box-shadow: 4px 4px 0 var(--ink);
+    }
+
+    .board-phase-header h2 {
+        font-size: clamp(1rem, 4vw, 1.4rem);
+    }
+
+    .phase-badge {
+        padding: 7px 9px;
+
+        font-size: 1.2rem;
+        font-weight: 900;
+        line-height: 1.1;
+
+        letter-spacing: 0.04em;
+    }
+
+    /* BOARD */
+
+    .board {
+        gap: 5px;
+        padding: 5px;
+
+        border-width: 3px;
+    }
+
+    .tile {
+        padding: 18px 3px 3px;
+
+        font-size: clamp(1rem, 4vw, 1.5rem);
+    }
+
+    .tile-coordinate {
+        top: 3px;
+        left: 2px;
+
+        max-width: calc(100% - 4px);
+
+        padding: 3px 4px;
+
+        font-size: clamp(0.85rem, 3.5vw, 1.1rem);
+        font-weight: 900;
+        line-height: 1.1;
+
+        letter-spacing: 0;
+    }
+
+    .tile-content {
+        width: 100%;
+        height: 100%;
+
+        min-width: 0;
+        min-height: 0;
+
+        font-size: clamp(1.2rem, 5vw, 2rem);
+        font-weight: 900;
+        line-height: 1.05;
+
+        overflow-wrap: anywhere;
+        text-align: center;
+    }
+
+}
+
+
+/* =========================================================
+   9. VERY SMALL SCREENS
+========================================================= */
+
+@media (max-width: 380px) {
+
+    /* PHASE HEADER */
+
+    .board-phase-header {
+        gap: 6px;
+        padding: 8px 9px;
+    }
+
+    .board-phase-header h2 {
+        font-size: 0.95rem;
+    }
+
+    .phase-badge {
+        padding: 6px 7px;
+
+        font-size: 1.5rem;
+    }
+
+    /* BOARD */
+
+    .board {
+        gap: 4px;
+        padding: 4px;
+    }
+
+    .tile {
+        padding: 16px 2px 2px;
+    }
+
+    .tile-coordinate {
+        top: 2px;
+        left: 2px;
+
+        padding: 2px 3px;
+
+        font-size: 0.8rem;
+        letter-spacing: 0;
+    }
+
+    .tile-content {
+        font-size: clamp(1rem, 5vw, 1.4rem);
+    }
+
+}

@@ -1,0 +1,615 @@
+/* =========================================================
+TORNADO — HOME SCREEN
+BEAUTIFUL CHAOS
+========================================================= */
+
+/* ---------------------------------------------------------
+MAIN SCREEN
+--------------------------------------------------------- */
+
+.home-screen {
+position: relative;
+isolation: isolate;
+
+
+display: flex;
+justify-content: center;
+align-items: center;
+
+width: 100%;
+min-height: 100vh;
+
+padding: clamp(28px, 5vw, 64px) 24px;
+
+overflow: hidden;
+
+background: var(--ink);
+
+
+}
+
+/* ---------------------------------------------------------
+GIANT BACKGROUND LOGO
+--------------------------------------------------------- */
+
+.home-screen::before {
+content: "";
+
+position: absolute;
+z-index: -1;
+
+top: 50%;
+left: 50%;
+
+width: min(1100px, 115vw);
+aspect-ratio: 1;
+
+background-image: url("../assets/images/tornado-logo.png");
+background-repeat: no-repeat;
+background-position: center;
+background-size: contain;
+
+opacity: .02;
+
+transform: translate(-50%, -50%) rotate(-12deg) scale(1.25);
+
+pointer-events: none;
+user-select: none;
+
+}
+
+
+/* ---------------------------------------------------------
+BACKGROUND SHAPES
+--------------------------------------------------------- */
+
+.home-background-shape {
+position: absolute;
+z-index: -1;
+
+
+pointer-events: none;
+
+border: 3px solid;
+opacity: .18;
+
+
+}
+
+.home-shape-one {
+top: -100px;
+right: -80px;
+
+
+width: 360px;
+height: 360px;
+
+border-color: var(--electric-pink);
+border-radius: 50%;
+
+box-shadow:
+    0 0 0 24px var(--ink),
+    0 0 0 27px var(--electric-pink);
+
+transform: rotate(-18deg);
+
+
+}
+
+.home-shape-two {
+bottom: -150px;
+left: -100px;
+
+
+width: 420px;
+height: 280px;
+
+border-color: var(--electric-blue);
+
+transform: rotate(-24deg);
+
+
+}
+
+.home-shape-three {
+top: 35%;
+left: 8%;
+
+
+width: 70px;
+height: 70px;
+
+border-color: var(--acid-yellow);
+
+transform: rotate(35deg);
+
+
+}
+
+/* ---------------------------------------------------------
+CONTENT
+--------------------------------------------------------- */
+
+.home-content {
+position: relative;
+
+
+display: flex;
+flex-direction: column;
+align-items: center;
+
+width: 100%;
+max-width: 780px;
+
+margin: auto;
+
+
+}
+
+/* ---------------------------------------------------------
+BRAND
+--------------------------------------------------------- */
+
+.home-brand {
+display: flex;
+flex-direction: column;
+align-items: center;
+
+
+width: 100%;
+
+margin-bottom: clamp(36px, 6vh, 64px);
+
+text-align: center;
+
+animation: homeBrandEntrance 650ms ease both;
+
+
+}
+
+.home-logo {
+display: block;
+
+
+width: min(100%, 560px);
+max-height: 32vh;
+
+object-fit: contain;
+
+filter: drop-shadow(8px 8px 0 var(--electric-pink));
+
+
+}
+
+
+.home-description {
+max-width: 420px;
+
+
+margin: 18px 0 0;
+
+color: var(--soft-lilac);
+
+font-family: var(--font-ui);
+font-size: clamp(1.4rem, 2vw, 1.8rem);
+line-height: 1.5;
+
+letter-spacing: .04em;
+
+
+}
+
+/* ---------------------------------------------------------
+CASCADING MENU
+--------------------------------------------------------- */
+
+.home-menu {
+display: flex;
+flex-direction: column;
+align-items: flex-start;
+
+
+gap: 18px;
+
+width: 100%;
+max-width: 540px;
+
+
+}
+
+/* ---------------------------------------------------------
+MENU BUTTONS
+--------------------------------------------------------- */
+
+.home-menu-button {
+position: relative;
+
+
+display: grid;
+grid-template-columns: 48px minmax(0, 1fr) 30px;
+align-items: center;
+
+gap: 14px;
+
+width: 100%;
+min-height: 76px;
+
+padding: 14px 20px;
+
+border: 3px solid var(--ink);
+border-radius: 0;
+
+color: var(--ink);
+
+font-family: var(--font-ui);
+font-size: clamp(1.7rem, 3vw, 2.2rem);
+font-weight: 900;
+
+text-align: left;
+
+cursor: pointer;
+
+box-shadow: 6px 6px 0 var(--electric-pink);
+
+opacity: 0;
+
+animation: homeMenuEntrance 500ms cubic-bezier(.2, .8, .2, 1) both;
+
+transition:
+    transform 180ms ease,
+    box-shadow 180ms ease,
+    background-color 180ms ease;
+
+
+}
+
+/* ---------------------------------------------------------
+TORNADO MENU — CONE COMPOSITION
+--------------------------------------------------------- */
+
+.home-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 18px;
+
+    width: 100%;
+    max-width: 540px;
+}
+
+/* ---------------------------------------------------------
+TORNADO MENU — CONE COMPOSITION
+--------------------------------------------------------- */
+
+.home-menu-primary {
+    align-self: center;
+    width: 100%;
+
+    --move-x: 0px;
+    --move-y: 0px;
+
+    background: var(--acid-yellow);
+    box-shadow: 6px 6px 0 var(--electric-pink);
+
+    animation-delay: 180ms;
+}
+
+.home-menu-secondary {
+    align-self: center;
+    width: 82%;
+
+    --move-x: -18px;
+    --move-y: 0px;
+
+    background: var(--soft-blue);
+    box-shadow: 6px 6px 0 var(--electric-blue);
+
+    animation-delay: 340ms;
+}
+
+.home-menu-tertiary {
+    align-self: center;
+    width: 64%;
+
+    --move-x: -36px;
+    --move-y: 0px;
+
+    background: var(--soft-pink);
+    box-shadow: 6px 6px 0 var(--electric-purple);
+
+    animation-delay: 500ms;
+}
+
+.home-menu-quaternary {
+    align-self: center;
+    width: 53%;
+
+    --move-x: 10px;
+    --move-y: 0px;
+
+    background: var(--soft-lilac);
+    box-shadow: 6px 6px 0 var(--electric-pink);
+
+    animation-delay: 660ms;
+}
+
+/* ---------------------------------------------------------
+BUTTON CONTENT
+--------------------------------------------------------- */
+
+.home-menu-number {
+display: flex;
+align-items: center;
+justify-content: center;
+
+
+width: 42px;
+height: 42px;
+
+border: 2px solid currentColor;
+
+font-family: var(--font-ui);
+font-size: 1.4rem;
+line-height: 1;
+
+opacity: .75;
+
+
+}
+
+.home-menu-label {
+display: block;
+
+
+line-height: 1.1;
+
+overflow-wrap: anywhere;
+
+
+}
+
+.home-menu-arrow {
+display: block;
+
+
+font-size: 2.6rem;
+line-height: 1;
+
+text-align: center;
+
+transition: transform 180ms ease;
+
+
+}
+
+/* ---------------------------------------------------------
+HOVER / FOCUS
+--------------------------------------------------------- */
+
+.home-menu-button:hover {
+    transform:
+        translate(
+            calc(var(--move-x, 0px) - 4px),
+            calc(var(--move-y, 0px) - 4px)
+        )
+        rotate(-1deg);
+
+    box-shadow: 10px 10px 0 var(--electric-pink);
+}
+
+.home-menu-secondary:hover {
+    box-shadow: 10px 10px 0 var(--electric-blue);
+}
+
+.home-menu-tertiary:hover {
+    box-shadow: 10px 10px 0 var(--electric-purple);
+}
+
+.home-menu-quaternary:hover {
+    box-shadow: 10px 10px 0 var(--electric-pink);
+}
+
+.home-menu-button:hover .home-menu-arrow {
+    transform: translate(3px, -3px);
+}
+
+.home-menu-button:active {
+    transform:
+        translate(
+            calc(var(--move-x, 0px) + 3px),
+            calc(var(--move-y, 0px) + 3px)
+        );
+
+    box-shadow: 2px 2px 0 var(--ink);
+}
+
+.home-menu-button:focus-visible {
+    outline: 4px solid var(--acid-yellow);
+    outline-offset: 6px;
+}
+
+/* ---------------------------------------------------------
+FOOTER
+--------------------------------------------------------- */
+
+.home-footer {
+display: flex;
+justify-content: center;
+flex-wrap: wrap;
+
+
+gap: 10px 24px;
+
+width: 100%;
+
+margin-top: clamp(36px, 6vh, 60px);
+
+color: var(--soft-lilac);
+
+font-family: var(--font-ui);
+font-size: 1.1rem;
+font-weight: 900;
+
+letter-spacing: .12em;
+
+opacity: .65;
+
+animation: homeBrandEntrance 650ms ease 650ms both;
+
+
+}
+
+/* ---------------------------------------------------------
+ANIMATIONS
+--------------------------------------------------------- */
+
+@keyframes homeBrandEntrance {
+
+
+from {
+    opacity: 0;
+    transform: translateY(18px);
+}
+
+to {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+
+}
+
+@keyframes homeMenuEntrance {
+
+    from {
+        opacity: 0;
+
+        transform:
+            translate(
+                calc(var(--move-x, 0px) + 30px),
+                calc(var(--move-y, 0px) + 18px)
+            )
+            rotate(2deg);
+    }
+
+    to {
+        opacity: 1;
+
+        transform:
+            translate(
+                var(--move-x, 0px),
+                var(--move-y, 0px)
+            )
+            rotate(0);
+    }
+
+}
+
+/* ---------------------------------------------------------
+RESPONSIVE
+--------------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+
+.home-screen {
+    align-items: flex-start;
+
+    min-height: 100vh;
+
+    padding: 40px 20px;
+}
+
+
+.home-content {
+    margin: auto 0;
+}
+
+
+.home-brand {
+    margin-bottom: 36px;
+}
+
+
+.home-logo {
+    width: min(100%, 420px);
+    max-height: 32vh;
+}
+
+
+.home-description {
+    max-width: 300px;
+
+    margin-top: 14px;
+
+    font-size: 1.4rem;
+}
+
+
+.home-menu {
+    gap: 16px;
+}
+
+
+.home-menu-button {
+    grid-template-columns: 34px minmax(0, 1fr) 24px;
+
+    gap: 10px;
+
+    min-height: 66px;
+
+    padding: 12px;
+
+    font-size: clamp(1.4rem, 4.5vw, 1.9rem);
+
+    box-shadow: 4px 4px 0 var(--electric-pink);
+}
+
+
+.home-menu-number {
+    width: 32px;
+    height: 32px;
+
+    font-size: 1.1rem;
+}
+
+
+.home-menu-arrow {
+    font-size: 2rem;
+}
+
+
+
+.home-footer {
+    gap: 8px 14px;
+
+    margin-top: 36px;
+
+    font-size: .9rem;
+}
+
+
+}
+
+/* ---------------------------------------------------------
+REDUCED MOTION
+--------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+
+.home-brand,
+.home-menu-button,
+.home-footer {
+    animation: none;
+    opacity: 1;
+}
+
+
+.home-menu-button,
+.home-menu-arrow {
+    transition: none;
+}
+
+
+}

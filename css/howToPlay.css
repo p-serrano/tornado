@@ -1,0 +1,1191 @@
+/* =========================================================
+   TORNADO — HOW TO PLAY
+   BEAUTIFUL CHAOS
+   PUNK × COMIC
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   SCREEN
+--------------------------------------------------------- */
+
+.how-to-play-screen {
+    position: relative;
+    isolation: isolate;
+
+    width: 100%;
+    min-height: 100vh;
+
+    padding: clamp(20px, 3vw, 40px);
+
+    overflow: hidden;
+
+    background: var(--ink);
+    color: var(--soft-lilac);
+}
+
+
+/* ---------------------------------------------------------
+   BACKGROUND LOGO
+--------------------------------------------------------- */
+
+.how-to-play-screen::before {
+    content: "";
+
+    position: absolute;
+    z-index: -1;
+
+    top: 48%;
+    left: 50%;
+
+    width: min(1000px, 110vw);
+    aspect-ratio: 1;
+
+    background-image: url("../assets/images/tornado-logo.png");
+    background-repeat: no-repeat;
+    background-position: center;
+    background-size: contain;
+
+    opacity: .025;
+
+    transform: translate(-50%, -50%) rotate(-12deg) scale(1.15);
+
+    pointer-events: none;
+    user-select: none;
+}
+
+
+/* ---------------------------------------------------------
+   BACKGROUND SHAPE
+--------------------------------------------------------- */
+
+.how-to-play-screen::after {
+    content: "";
+
+    position: absolute;
+    z-index: -1;
+
+    top: 180px;
+    right: -120px;
+
+    width: 280px;
+    height: 280px;
+
+    border: 3px solid var(--electric-pink);
+    border-radius: 50%;
+
+    box-shadow:
+        0 0 0 18px var(--ink),
+        0 0 0 21px var(--electric-pink);
+
+    opacity: .12;
+
+    pointer-events: none;
+}
+
+
+/* ---------------------------------------------------------
+   SHARED LAYOUT
+--------------------------------------------------------- */
+
+.how-to-play-header,
+.how-to-play-steps,
+.how-to-play-effects,
+.how-to-play-cta,
+.how-to-play-footer {
+    position: relative;
+
+    width: 100%;
+    max-width: 1100px;
+
+    margin-right: auto;
+    margin-left: auto;
+}
+
+
+/* ---------------------------------------------------------
+   HEADER
+--------------------------------------------------------- */
+
+.how-to-play-header {
+    display: grid;
+    grid-template-columns: 48px minmax(0, 1fr) auto;
+
+    align-items: start;
+
+    gap: 18px;
+
+    margin-bottom: 38px;
+}
+
+
+/* BACK BUTTON */
+
+.how-to-play-back-button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    width: 48px;
+    height: 48px;
+
+    padding: 0;
+
+    border: 2px solid var(--soft-lilac);
+    border-radius: 0;
+
+    background: transparent;
+    color: var(--soft-lilac);
+
+    font-family: var(--font-ui);
+    font-size: 2.4rem;
+    line-height: 1;
+
+    cursor: pointer;
+
+    transition:
+        color var(--transition-fast),
+        background-color var(--transition-fast),
+        transform var(--transition-fast);
+}
+
+
+.how-to-play-back-button:hover {
+    background: var(--acid-yellow);
+    color: var(--ink);
+
+    transform: translate(-2px, -2px);
+}
+
+
+.how-to-play-back-button:focus-visible {
+    outline: 3px solid var(--electric-blue);
+    outline-offset: 4px;
+}
+
+
+/* HEADING */
+
+.how-to-play-heading {
+    min-width: 0;
+}
+
+
+.how-to-play-eyebrow {
+    display: block;
+
+    color: var(--electric-pink);
+
+    font-family: var(--font-ui);
+    font-size: 1.1rem;
+    font-weight: 900;
+
+    letter-spacing: .16em;
+}
+
+
+.how-to-play-heading h1 {
+    margin: 8px 0 12px;
+
+    color: var(--soft-lilac);
+
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 6vw, 5.5rem);
+    font-weight: 400;
+
+    line-height: .95;
+}
+
+
+.how-to-play-heading h1 span {
+    color: var(--acid-yellow);
+}
+
+
+.how-to-play-heading p {
+    margin: 0;
+
+    color: var(--soft-lilac);
+
+    font-family: var(--font-ui);
+    font-size: 1.4rem;
+
+    opacity: .8;
+}
+
+
+/* HEADER STICKER */
+
+.how-to-play-sticker {
+    align-self: start;
+
+    padding: 8px 12px;
+
+    border: 2px solid var(--ink);
+
+    background: var(--electric-pink);
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: 1.6rem;
+    font-weight: 900;
+
+    white-space: nowrap;
+
+    transform: rotate(5deg);
+}
+
+
+/* ---------------------------------------------------------
+   FOUR STEPS
+--------------------------------------------------------- */
+
+.how-to-play-steps {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 20px;
+
+    margin-bottom: 54px;
+}
+
+
+/* STEP CARD */
+
+.how-to-play-step {
+    position: relative;
+
+    display: grid;
+    grid-template-columns: 54px minmax(0, 1fr) 42px;
+
+    align-items: start;
+
+    gap: 15px;
+
+    min-width: 0;
+    min-height: 190px;
+
+    padding: 24px 20px;
+
+    border: 2px solid var(--soft-lilac);
+
+    background: var(--surface-dark);
+    color: var(--soft-lilac);
+
+    box-shadow: var(--shadow-md);
+
+    transition:
+        transform var(--transition-fast),
+        border-color var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.how-to-play-step:hover {
+    border-color: var(--electric-pink);
+
+    transform: translate(-2px, -2px);
+
+    box-shadow: 7px 7px 0 var(--electric-pink);
+}
+
+
+/* STEP NUMBER */
+
+.how-to-play-step-number {
+    display: grid;
+    place-items: center;
+
+    width: 48px;
+    height: 48px;
+
+    border: 2px solid var(--ink);
+
+    background: var(--acid-yellow);
+    color: var(--ink);
+
+    font-family: var(--font-display);
+    font-size: 2rem;
+    line-height: 1;
+
+    transform: rotate(-5deg);
+}
+
+
+/* DIFFERENT STEP COLOURS */
+
+.how-to-play-step:nth-child(2) .how-to-play-step-number {
+    background: var(--electric-pink);
+}
+
+
+.how-to-play-step:nth-child(3) .how-to-play-step-number {
+    background: var(--electric-blue);
+}
+
+
+.how-to-play-step:nth-child(4) .how-to-play-step-number {
+    background: var(--acid-green);
+}
+
+
+/* STEP CONTENT */
+
+.how-to-play-step-content {
+    min-width: 0;
+}
+
+
+.how-to-play-step-label {
+    display: block;
+
+    margin-bottom: 9px;
+
+    color: var(--electric-blue);
+
+    font-family: var(--font-ui);
+    font-size: 1.5rem;
+    font-weight: 900;
+
+    letter-spacing: .1em;
+}
+
+
+.how-to-play-step:nth-child(2) .how-to-play-step-label {
+    color: var(--electric-pink);
+}
+
+
+.how-to-play-step:nth-child(3) .how-to-play-step-label {
+    color: var(--acid-yellow);
+}
+
+
+.how-to-play-step:nth-child(4) .how-to-play-step-label {
+    color: var(--acid-green);
+}
+
+
+.how-to-play-step-content h2 {
+    margin: 0 0 12px;
+
+    color: var(--soft-lilac);
+
+    font-family: var(--font-ui);
+    font-size: clamp(1.45rem, 2.1vw, 1.9rem);
+    font-weight: 900;
+
+    line-height: 1.05;
+}
+
+
+.how-to-play-step-content p {
+    margin: 0;
+
+    color: var(--soft-lilac);
+
+    font-family: var(--font-ui);
+    font-size: 1.8rem;
+
+    line-height: 1.45;
+
+    opacity: .82;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* STEP ICON */
+
+.how-to-play-step-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 38px;
+    height: 38px;
+
+    color: var(--electric-pink);
+
+    font-family: var(--font-display);
+    font-size: 2.7rem;
+    line-height: 1;
+
+    transform: rotate(8deg);
+}
+
+
+.how-to-play-step:nth-child(2) .how-to-play-step-icon {
+    color: var(--acid-yellow);
+}
+
+
+.how-to-play-step:nth-child(3) .how-to-play-step-icon {
+    color: var(--electric-blue);
+}
+
+
+.how-to-play-step:nth-child(4) .how-to-play-step-icon {
+    color: var(--acid-green);
+}
+
+
+/* ---------------------------------------------------------
+   SPECIAL EFFECTS SECTION
+--------------------------------------------------------- */
+
+.how-to-play-effects {
+    margin-bottom: 54px;
+}
+
+
+/* SECTION HEADER */
+
+.how-to-play-effects-header {
+    display: flex;
+    align-items: end;
+    justify-content: space-between;
+
+    gap: 20px;
+
+    margin-bottom: 24px;
+}
+
+
+.how-to-play-effects-header h2 {
+    margin: 7px 0 0;
+
+    color: var(--soft-lilac);
+
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 5vw, 4rem);
+    font-weight: 400;
+
+    line-height: 1;
+}
+
+
+.how-to-play-effects-header h2 span {
+    color: var(--acid-yellow);
+}
+
+
+.how-to-play-effects-note {
+    padding: 8px 12px;
+
+    border: 2px solid var(--electric-blue);
+
+    color: var(--electric-blue);
+
+    font-family: var(--font-ui);
+    font-size: 1.15rem;
+    font-weight: 900;
+
+    letter-spacing: .06em;
+
+    transform: rotate(-2deg);
+}
+
+
+/* ---------------------------------------------------------
+   SPECIAL EFFECTS GRID
+--------------------------------------------------------- */
+
+.how-to-play-effects-grid {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+
+    gap: 14px;
+}
+
+
+/* EFFECT CARD */
+
+.how-to-play-effect {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+
+    min-width: 0;
+    min-height: 205px;
+
+    padding: 20px 16px;
+
+    border: 2px solid var(--ink);
+
+    background: var(--soft-lilac);
+    color: var(--ink);
+
+    box-shadow: var(--shadow-sm);
+
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast);
+}
+
+
+.how-to-play-effect:hover {
+    transform: translate(-2px, -3px);
+
+    box-shadow: 6px 6px 0 var(--electric-pink);
+}
+
+
+/* EFFECT COLOURS */
+
+.effect-points {
+    background: var(--acid-yellow);
+}
+
+
+.effect-double {
+    background: var(--electric-pink);
+}
+
+
+.effect-half {
+    background: var(--electric-blue);
+}
+
+
+.effect-swap {
+    background: var(--soft-lilac);
+}
+
+
+.effect-tornado {
+    background: var(--acid-green);
+}
+
+
+/* EFFECT SYMBOL */
+
+.how-to-play-effect-symbol {
+    display: grid;
+    place-items: center;
+
+    width: 54px;
+    height: 54px;
+
+    margin-bottom: 17px;
+
+    border: 2px solid var(--ink);
+
+    background: var(--ink);
+    color: var(--acid-yellow);
+
+    font-family: var(--font-display);
+    font-size: 2.1rem;
+
+    line-height: 1;
+
+    box-shadow: 3px 3px 0 rgb(33 24 42 / 25%);
+
+    transform: rotate(-4deg);
+}
+
+
+.effect-double .how-to-play-effect-symbol {
+    color: var(--electric-pink);
+}
+
+
+.effect-half .how-to-play-effect-symbol {
+    color: var(--electric-blue);
+}
+
+
+.effect-swap .how-to-play-effect-symbol {
+    color: var(--soft-lilac);
+}
+
+
+.effect-tornado .how-to-play-effect-symbol {
+    color: var(--acid-green);
+}
+
+
+/* EFFECT TITLE */
+
+.how-to-play-effect h3 {
+    margin: 0 0 9px;
+
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: 1.55rem;
+    font-weight: 900;
+
+    line-height: 1;
+}
+
+
+/* EFFECT DESCRIPTION */
+
+.how-to-play-effect p {
+    margin: 0;
+
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: 1.2rem;
+
+    line-height: 1.4;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* ---------------------------------------------------------
+   CALL TO ACTION
+--------------------------------------------------------- */
+
+.how-to-play-cta {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 30px;
+
+    margin-bottom: 34px;
+    padding: clamp(24px, 4vw, 38px);
+
+    border: 3px solid var(--ink);
+
+    background: var(--electric-purple);
+    color: var(--soft-lilac);
+
+    box-shadow: 8px 8px 0 var(--electric-pink);
+}
+
+
+/* CTA DECORATION */
+
+.how-to-play-cta::after {
+    content: "?!";
+
+    position: absolute;
+
+    top: -27px;
+    right: 32%;
+
+    color: var(--acid-yellow);
+
+    font-family: var(--font-display);
+    font-size: 5rem;
+    line-height: 1;
+
+    transform: rotate(10deg);
+
+    pointer-events: none;
+}
+
+
+/* CTA COPY */
+
+.how-to-play-cta-copy {
+    position: relative;
+    z-index: 1;
+
+    min-width: 0;
+}
+
+
+.how-to-play-cta-copy .how-to-play-eyebrow {
+    color: var(--acid-yellow);
+}
+
+
+.how-to-play-cta-copy h2 {
+    margin: 9px 0 12px;
+
+    color: var(--surface);
+
+    font-family: var(--font-display);
+    font-size: clamp(2.4rem, 5vw, 4rem);
+    font-weight: 400;
+
+    line-height: .98;
+}
+
+
+.how-to-play-cta-copy p {
+    margin: 0;
+
+    color: var(--soft-lilac);
+
+    font-family: var(--font-ui);
+    font-size: 1.4rem;
+
+    line-height: 1.4;
+}
+
+
+/* CTA BUTTON */
+
+.how-to-play-play-button {
+    position: relative;
+    z-index: 1;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    flex-shrink: 0;
+
+    gap: 12px;
+
+    min-height: 64px;
+    padding: 16px 25px;
+
+    border: 3px solid var(--ink);
+    border-radius: 0;
+
+    background: var(--acid-yellow);
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: 1.8rem;
+    font-weight: 900;
+
+    white-space: nowrap;
+
+    box-shadow: 6px 6px 0 var(--ink);
+
+    cursor: pointer;
+
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+
+.how-to-play-play-button:hover {
+    background: var(--electric-pink);
+
+    transform: translate(-3px, -3px);
+
+    box-shadow: 9px 9px 0 var(--ink);
+}
+
+
+.how-to-play-play-button:active {
+    transform: translate(3px, 3px);
+
+    box-shadow: 2px 2px 0 var(--ink);
+}
+
+
+.how-to-play-play-button:focus-visible {
+    outline: 3px solid var(--electric-blue);
+    outline-offset: 5px;
+}
+
+
+/* ---------------------------------------------------------
+   FOOTER
+--------------------------------------------------------- */
+
+.how-to-play-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    gap: 16px;
+
+    padding-top: 18px;
+
+    border-top: 1px solid rgb(220 198 255 / 35%);
+
+    color: var(--soft-lilac);
+
+    font-family: var(--font-ui);
+    font-size: 1.1rem;
+    font-weight: 900;
+
+    letter-spacing: .12em;
+
+    opacity: .7;
+}
+
+
+/* ---------------------------------------------------------
+   TABLET — 900px
+--------------------------------------------------------- */
+
+@media (max-width: 900px) {
+
+    .how-to-play-header {
+        grid-template-columns: 44px minmax(0, 1fr) auto;
+
+        gap: 14px;
+    }
+
+
+    .how-to-play-back-button {
+        width: 44px;
+        height: 44px;
+    }
+
+
+    .how-to-play-steps {
+        gap: 16px;
+    }
+
+
+    .how-to-play-step {
+        grid-template-columns: 44px minmax(0, 1fr);
+
+        gap: 13px;
+
+        min-height: 0;
+
+        padding: 20px 16px;
+    }
+
+
+    .how-to-play-step-number {
+        width: 42px;
+        height: 42px;
+
+        font-size: 1.8rem;
+    }
+
+
+    .how-to-play-step-icon {
+        display: none;
+    }
+
+
+    .how-to-play-effects-grid {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+    }
+
+
+    .how-to-play-effect {
+        min-height: 185px;
+    }
+
+
+    .how-to-play-cta {
+        gap: 24px;
+    }
+
+
+    .how-to-play-play-button {
+        padding: 15px 20px;
+
+        font-size: 1.6rem;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   MOBILE — 600px
+--------------------------------------------------------- */
+
+@media (max-width: 600px) {
+
+    .how-to-play-screen {
+        padding: 22px 16px;
+    }
+
+
+    /* HEADER */
+
+    .how-to-play-header {
+        grid-template-columns: 40px minmax(0, 1fr);
+
+        gap: 12px;
+
+        margin-bottom: 30px;
+    }
+
+
+    .how-to-play-back-button {
+        width: 40px;
+        height: 40px;
+
+        font-size: 2rem;
+    }
+
+
+    .how-to-play-heading h1 {
+        font-size: clamp(2.6rem, 11vw, 3.8rem);
+    }
+
+
+    .how-to-play-heading p {
+        font-size: 1.2rem;
+    }
+
+
+    .how-to-play-sticker {
+        display: none;
+    }
+
+
+    /* STEPS */
+
+    .how-to-play-steps {
+        grid-template-columns: minmax(0, 1fr);
+
+        gap: 16px;
+
+        margin-bottom: 44px;
+    }
+
+
+    .how-to-play-step {
+        grid-template-columns: 42px minmax(0, 1fr) 30px;
+
+        gap: 12px;
+
+        padding: 19px 15px;
+
+        box-shadow: 4px 4px 0 var(--electric-pink);
+    }
+
+
+    .how-to-play-step-number {
+        width: 40px;
+        height: 40px;
+
+        font-size: 1.7rem;
+    }
+
+
+    .how-to-play-step-icon {
+        display: flex;
+
+        width: 28px;
+        height: 28px;
+
+        font-size: 2rem;
+    }
+
+
+    .how-to-play-step-content h2 {
+        font-size: 1.55rem;
+    }
+
+
+    .how-to-play-step-content p {
+        font-size: 1.2rem;
+    }
+
+
+    /* EFFECTS */
+
+    .how-to-play-effects {
+        margin-bottom: 44px;
+    }
+
+
+    .how-to-play-effects-header {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 14px;
+
+        margin-bottom: 20px;
+    }
+
+
+    .how-to-play-effects-header h2 {
+        font-size: clamp(2.5rem, 10vw, 3.5rem);
+    }
+
+
+    .how-to-play-effects-note {
+        font-size: 1.5rem;
+    }
+
+
+    .how-to-play-effects-grid {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+
+        gap: 12px;
+    }
+
+
+    .how-to-play-effect {
+        min-height: 175px;
+
+        padding: 16px 13px;
+
+        box-shadow: 3px 3px 0 var(--ink);
+    }
+
+
+    .how-to-play-effect-symbol {
+        width: 46px;
+        height: 46px;
+
+        margin-bottom: 14px;
+
+        font-size: 1.9rem;
+    }
+
+
+    .how-to-play-effect h3 {
+        font-size: 1.4rem;
+    }
+
+
+    .how-to-play-effect p {
+        font-size: 1.1rem;
+    }
+
+
+    /* CTA */
+
+    .how-to-play-cta {
+        align-items: stretch;
+        flex-direction: column;
+
+        gap: 24px;
+
+        margin-bottom: 28px;
+        padding: 24px 18px;
+
+        box-shadow: 5px 5px 0 var(--electric-pink);
+    }
+
+
+    .how-to-play-cta::after {
+        top: -22px;
+        right: 18px;
+
+        font-size: 3.8rem;
+    }
+
+
+    .how-to-play-cta-copy h2 {
+        font-size: clamp(2.3rem, 9vw, 3.2rem);
+    }
+
+
+    .how-to-play-cta-copy p {
+        font-size: 1.2rem;
+    }
+
+
+    .how-to-play-play-button {
+        width: 100%;
+        min-height: 58px;
+
+        padding: 14px 18px;
+
+        font-size: 1.6rem;
+
+        box-shadow: 4px 4px 0 var(--ink);
+    }
+
+
+    /* FOOTER */
+
+    .how-to-play-footer {
+        align-items: flex-start;
+        flex-direction: column;
+
+        gap: 8px;
+
+        font-size: 1.5rem;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   VERY SMALL SCREENS — 380px
+--------------------------------------------------------- */
+
+@media (max-width: 380px) {
+
+    .how-to-play-screen {
+        padding: 18px 12px;
+    }
+
+
+    .how-to-play-heading h1 {
+        font-size: 2.5rem;
+    }
+
+
+    .how-to-play-step {
+        grid-template-columns: 34px minmax(0, 1fr);
+
+        gap: 11px;
+
+        padding: 16px 12px;
+    }
+
+
+    .how-to-play-step-number {
+        width: 34px;
+        height: 34px;
+
+        font-size: 1.45rem;
+    }
+
+
+    .how-to-play-step-icon {
+        display: none;
+    }
+
+
+    .how-to-play-step-content h2 {
+        font-size: 1.4rem;
+    }
+
+
+    .how-to-play-effects-grid {
+        grid-template-columns: minmax(0, 1fr);
+    }
+
+
+    .how-to-play-effect {
+        display: grid;
+        grid-template-columns: 46px minmax(0, 1fr);
+
+        align-items: center;
+
+        column-gap: 14px;
+
+        min-height: 0;
+    }
+
+
+    .how-to-play-effect-symbol {
+        grid-row: 1 / span 2;
+
+        margin: 0;
+    }
+
+
+    .how-to-play-effect h3 {
+        margin-bottom: 5px;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   REDUCED MOTION
+--------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .how-to-play-back-button,
+    .how-to-play-step,
+    .how-to-play-effect,
+    .how-to-play-play-button {
+        transition: none;
+    }
+
+}

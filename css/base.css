@@ -1,0 +1,179 @@
+/* =========================================================
+   TORNADO — BEAUTIFUL CHAOS
+   BASE STYLES
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   RESET
+--------------------------------------------------------- */
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+html {
+    min-height: 100%;
+    scroll-behavior: smooth;
+}
+
+body {
+    margin: 0;
+    min-height: 100vh;
+
+    background: var(--background);
+    color: var(--text-main);
+
+    font-family: var(--font-ui);
+    font-size: 28px;
+    line-height: 1.35;
+
+    -webkit-font-smoothing: antialiased;
+    text-rendering: optimizeLegibility;
+}
+
+
+/* ---------------------------------------------------------
+   APP ROOT
+--------------------------------------------------------- */
+
+#app {
+    min-height: 100vh;
+}
+
+
+/* ---------------------------------------------------------
+   TYPOGRAPHY
+--------------------------------------------------------- */
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p {
+    margin-top: 0;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+    font-weight: 400;
+    line-height: 1.05;
+}
+
+p {
+    margin-bottom: 20px;
+}
+
+strong,
+b {
+    font-weight: 400;
+}
+
+
+/* ---------------------------------------------------------
+   FORM CONTROLS
+--------------------------------------------------------- */
+
+button,
+input,
+select,
+textarea {
+    font: inherit;
+}
+
+button {
+    cursor: pointer;
+}
+
+button:disabled {
+    cursor: not-allowed;
+    opacity: .55;
+}
+
+input,
+select,
+textarea {
+    color: var(--text-main);
+}
+
+input::placeholder,
+textarea::placeholder {
+    color: var(--text-muted);
+    opacity: 1;
+}
+
+input:focus-visible,
+select:focus-visible,
+textarea:focus-visible,
+button:focus-visible {
+    outline: 3px solid var(--electric-purple);
+    outline-offset: 4px;
+}
+
+
+/* ---------------------------------------------------------
+   LINKS
+--------------------------------------------------------- */
+
+a {
+    color: inherit;
+}
+
+
+/* ---------------------------------------------------------
+   MEDIA
+--------------------------------------------------------- */
+
+img,
+svg {
+    max-width: 100%;
+}
+
+img {
+    display: block;
+}
+
+
+/* ---------------------------------------------------------
+   SELECTION
+--------------------------------------------------------- */
+
+::selection {
+    background: var(--acid-yellow);
+    color: var(--ink);
+}
+
+
+/* ---------------------------------------------------------
+   SCROLLBAR
+--------------------------------------------------------- */
+
+* {
+    scrollbar-color: var(--electric-purple) var(--soft-lilac);
+}
+
+
+/* ---------------------------------------------------------
+   REDUCED MOTION
+--------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    *,
+    *::before,
+    *::after {
+        animation-duration: .01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: .01ms !important;
+        scroll-behavior: auto !important;
+    }
+
+}
