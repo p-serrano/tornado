@@ -168,7 +168,23 @@ const StarterPackSync = {
                     {
                         question: questionData.question,
                         answer: questionData.answer,
+
+                        activityType:
+                            questionData.activityType || "Grammar Challenge",
+
+                        instructions:
+                            questionData.instructions || "",
+
+                        // Preserve matching data during synchronization.
+                        matchingPairs: questionData.matchingPairs
+                            ? {
+                                left: [...questionData.matchingPairs.left],
+                                right: [...questionData.matchingPairs.right]
+                            }
+                            : undefined,
+
                         tags: questionData.tags || {},
+
                         sourcePackId: pack.id,
                         sourceId
                     }
@@ -199,6 +215,21 @@ const StarterPackSync = {
             const newQuestion = QuestionManager.create({
                 question: questionData.question,
                 answer: questionData.answer,
+
+                activityType:
+                    questionData.activityType || "Grammar Challenge",
+
+                instructions:
+                    questionData.instructions || "",
+
+                // Preserve matching data when creating the question.
+                matchingPairs: questionData.matchingPairs
+                    ? {
+                        left: [...questionData.matchingPairs.left],
+                        right: [...questionData.matchingPairs.right]
+                    }
+                    : undefined,
+
                 tags: questionData.tags || {}
             });
 

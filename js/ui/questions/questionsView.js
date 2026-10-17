@@ -572,132 +572,201 @@ const QuestionsView = {
 
         },
 
+    // =====================================================
+    // PARSE MULTIPLE-CHOICE QUESTION
+    // =====================================================
+
+    parseMultipleChoiceQuestion(questionText) {
+
+        const text = String(questionText || "").trim();
+
+        const optionPattern = /(?:^|\s)([A-D])\)\s+/g;
+
+        const matches = [...text.matchAll(optionPattern)];
+
+        if (matches.length < 2) {
+            return {
+                prompt: text,
+                options: []
+            };
+        }
+
+        const firstOptionIndex = matches[0].index;
+
+        const prompt = text
+            .slice(0, firstOptionIndex)
+            .trim();
+
+        const options = matches.map((match, index) => {
+
+            const startIndex =
+                match.index + match[0].length;
+
+            const endIndex =
+                index + 1 < matches.length
+                    ? matches[index + 1].index
+                    : text.length;
+
+            return {
+                letter: match[1],
+                text: text.slice(startIndex, endIndex).trim()
+            };
+
+        });
+
+        return {
+            prompt,
+            options
+        };
+
+    },
+
+
+    // =====================================================
+    // RENDER QUESTION LIST
+    // =====================================================
+
     renderQuestionList(questions) {
 
-            if (!questions.length) {
+        if (!questions.length) {
 
-                return `
+            return `
+                <div class="questions-empty">
 
-                    <div class="questions-empty">
+                    <span class="questions-empty-icon">?</span>
 
-                        <span class="questions-empty-icon">?</span>
+                    <h3>NO QUESTIONS FOUND</h3>
 
-                        <h3>
-                            NO QUESTIONS FOUND
-                        </h3>
+                    <p>
+                        Change your filters or create a new question.
+                    </p>
 
-                        <p>
-                            Change your filters or create a new question.
-                        </p>
+                </div>
+            `;
 
+        }
+
+        return questions.map(question => {
+
+            const tags = QuestionManager.normalizeTags(
+                question.tags || {}
+            );
+
+            const allTags = [
+                question.activityType,
+                ...tags.cefr,
+                ...tags.types,
+                ...tags.grammar,
+                ...tags.vocabulary
+            ].filter(Boolean);
+
+            // Separate multiple-choice options from the prompt.
+            const parsedQuestion =
+                this.parseMultipleChoiceQuestion(question.question);
+
+            const prompt = parsedQuestion.prompt;
+            const options = parsedQuestion.options;
+
+            return `
+                <article
+                    class="question-card"
+                    data-question-id="${Utils.escapeHTML(question.id)}"
+                >
+
+                    <div class="question-card-index">
+                        ?
                     </div>
 
-                `;
+                    <div class="question-card-content">
 
-            }
+                        <p class="question-card-prompt">${Utils.escapeHTML(
+                            this.parseMultipleChoiceQuestion(question.question).prompt
+                        )}</p>
 
+                        ${
+                            options.length
+                                ? `
+                                    <div class="question-card-options">
 
-            return questions.map(question => {
+                                        ${options.map(option => `
+                                            <div class="question-card-option">
 
-                const tags = QuestionManager.normalizeTags(
-                    question.tags || {}
-                );
+                                                <span class="question-card-option-letter">
+                                                    ${Utils.escapeHTML(option.letter)}
+                                                </span>
 
-                const allTags = [
+                                                <span class="question-card-option-text">
+                                                    ${Utils.escapeHTML(option.text)}
+                                                </span>
 
-                    ...tags.cefr,
-                    ...tags.types,
-                    ...tags.grammar,
-                    ...tags.vocabulary,
-                    ...tags.custom
+                                            </div>
+                                        `).join("")}
 
-                ];
+                                    </div>
+                                `
+                                : ""
+                        }
 
+                        <details class="question-card-answer">
 
-                return `
+                            <summary>
+                                REVEAL ANSWER
+                            </summary>
 
-                    <article
-                        class="question-card"
-                        data-question-id="${Utils.escapeHTML(question.id)}"
-                    >
-
-                        <div class="question-card-index">
-                            ?
-                        </div>
-
-
-                        <div class="question-card-content">
-
-                            <p class="question-card-prompt">
-                                ${Utils.escapeHTML(question.question)}
+                            <p>
+                                ${Utils.escapeHTML(question.answer)}
                             </p>
 
-                            <details class="question-card-answer">
+                        </details>
 
-                                <summary>
-                                    REVEAL ANSWER
-                                </summary>
+                        <div class="question-card-tags">
 
-                                <p>
-                                    ${Utils.escapeHTML(question.answer)}
-                                </p>
-
-                            </details>
-
-
-                            <div class="question-card-tags">
-
-                                ${allTags.length
+                            ${
+                                allTags.length
                                     ? allTags.map(tag => `
-
                                         <span class="question-tag">
                                             ${Utils.escapeHTML(tag)}
                                         </span>
-
                                     `).join("")
                                     : `
-
                                         <span class="question-tag question-tag-empty">
                                             UNTAGGED
                                         </span>
-
                                     `
-                                }
-
-                            </div>
+                            }
 
                         </div>
 
+                    </div>
 
-                        <div class="question-card-actions">
+                    <div class="question-card-actions">
 
-                            <button
-                                type="button"
-                                class="question-edit-button"
-                                data-action="edit"
-                                data-id="${Utils.escapeHTML(question.id)}"
-                            >
-                                EDIT
-                            </button>
+                        <button
+                            type="button"
+                            class="question-edit-button"
+                            data-action="edit"
+                            data-id="${Utils.escapeHTML(question.id)}"
+                        >
+                            EDIT
+                        </button>
 
-                            <button
-                                type="button"
-                                class="question-delete-button"
-                                data-action="delete"
-                                data-id="${Utils.escapeHTML(question.id)}"
-                            >
-                                DELETE
-                            </button>
+                        <button
+                            type="button"
+                            class="question-delete-button"
+                            data-action="delete"
+                            data-id="${Utils.escapeHTML(question.id)}"
+                        >
+                            DELETE
+                        </button>
 
-                        </div>
+                    </div>
 
-                    </article>
+                </article>
+            `;
 
-                `;
+        }).join("");
 
-            }).join("");
-
-        },
+    },
 
     bindEvents() {
 

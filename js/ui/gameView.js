@@ -425,10 +425,252 @@ const GameView = {
     // QUESTION TYPE HELPERS
     // =========================================================
 
+    isMatching(question) {
+        return this.getActivityType(question)
+            .toLowerCase()
+            .trim() === "matching";
+    },
+
+
     isMultipleChoice(question) {
-        return question?.tags?.types?.some(
-            type => type.trim().toLowerCase() === "multiple choice"
+
+        if (!question) {
+            return false;
+        }
+
+        // NEW FORMAT: activity type defines the activity.
+        if (
+            question.activityType?.trim().toLowerCase() ===
+            "multiple choice"
+        ) {
+            return true;
+        }
+
+        // LEGACY FORMAT: preserve support for older questions.
+        return question.tags?.types?.some(
+            type =>
+                typeof type === "string" &&
+                type.trim().toLowerCase() === "multiple choice"
         ) ?? false;
+
+    },
+
+
+    // =========================================================
+    // QUESTION DISPLAY HELPERS
+    // =========================================================
+
+    getActivityType(question) {
+
+        return question?.activityType || "Grammar Challenge";
+
+    },
+
+
+    // =========================================================
+    // RENDER QUESTION CONTENT
+    // =========================================================
+
+    renderQuestionContent(question) {
+
+        const activityType = this.getActivityType(question);
+        const instructions = question?.instructions || "";
+
+        // Detect whether this is a Matching activity.
+        const isMatching =
+            String(activityType).trim().toLowerCase() === "matching";
+
+        // Matching activities must display the matching pairs,
+        // not the generic question text.
+        const questionContent = isMatching
+            ? this.renderMatchingQuestions(question)
+            : `
+                <div class="question-text">
+                    ${Utils.escapeHTML(question?.question || "")}
+                </div>
+            `;
+
+        return `
+            <div class="question-content-container">
+
+                <div class="question-meta-row">
+
+                    <div class="question-activity-type">
+                        ${Utils.escapeHTML(activityType)}
+                    </div>
+
+                    ${
+                        instructions
+                            ? `
+                                <div class="question-instructions">
+                                    ${Utils.escapeHTML(instructions)}
+                                </div>
+                            `
+                            : ""
+                    }
+
+                </div>
+
+                <div class="question-content-body">
+                    ${questionContent}
+                </div>
+
+            </div>
+        `;
+    },
+
+
+    // =========================================================
+    // RENDER MATCHING QUESTIONS
+    // =========================================================
+
+    renderMatchingQuestions(question) {
+
+        let leftItems = [];
+        let rightItems = [];
+
+        // -----------------------------------------------------
+        // NEW FORMAT: EXPLICIT MATCHING PAIRS
+        // -----------------------------------------------------
+
+        console.log("MATCHING QUESTION DATA:", {
+            id: question?.id,
+            sourceId: question?.sourceId,
+            sourcePackId: question?.sourcePackId,
+            activityType: question?.activityType,
+            matchingPairs: question?.matchingPairs,
+            question: question?.question
+        });
+
+        if (
+            question?.matchingPairs &&
+            Array.isArray(question.matchingPairs.left) &&
+            Array.isArray(question.matchingPairs.right)
+        ) {
+
+            leftItems = question.matchingPairs.left;
+            rightItems = question.matchingPairs.right;
+
+        }
+
+        // -----------------------------------------------------
+        // LEGACY FORMAT: PARSE QUESTION TEXT
+        // -----------------------------------------------------
+
+        else {
+
+            const rawText = String(question?.question || "");
+
+            // Support both real line breaks and literal "\n".
+            const normalizedText = rawText.replace(/\\n/g, "\n");
+
+            const lines = normalizedText
+                .split(/\r?\n/)
+                .map(line => line.trim())
+                .filter(Boolean);
+
+            // Find the first item labelled A., B., C., etc.
+            const rightIndex = lines.findIndex(line =>
+                /^[A-Z]\.\s*/.test(line)
+            );
+
+            if (rightIndex !== -1) {
+
+                const leftLines = lines.slice(0, rightIndex);
+                const rightLines = lines.slice(rightIndex);
+
+                // Extract numbered items from List A.
+                leftItems = leftLines
+                    .join(" ")
+                    .split(/\s*\/\s*/)
+                    .map(item =>
+                        item.replace(/^\d+\.\s*/, "").trim()
+                    )
+                    .filter(Boolean);
+
+                // Extract lettered items from List B.
+                rightItems = rightLines
+                    .map(item =>
+                        item.replace(/^[A-Z]\.\s*/, "").trim()
+                    )
+                    .filter(Boolean);
+
+            }
+
+        }
+
+        // -----------------------------------------------------
+        // VALIDATION
+        // -----------------------------------------------------
+
+        if (!leftItems.length || !rightItems.length) {
+
+            console.warn(
+                "Matching activity has no valid matching pairs:",
+                question
+            );
+
+            return `
+                <div class="question-text">
+                    Matching pairs could not be loaded.
+                </div>
+            `;
+
+        }
+
+        // -----------------------------------------------------
+        // RENDER TWO COLUMNS
+        // -----------------------------------------------------
+
+        return `
+            <div class="matching-questions">
+
+                <div class="matching-column matching-column-left">
+
+                    <div class="matching-column-title">
+                        LIST A
+                    </div>
+
+                    ${leftItems.map((item, index) => `
+                        <div class="matching-item matching-item-left">
+
+                            <span class="matching-letter matching-number">
+                                ${index + 1}
+                            </span>
+
+                            <span class="matching-item-text">
+                                ${Utils.escapeHTML(String(item))}
+                            </span>
+
+                        </div>
+                    `).join("")}
+
+                </div>
+
+                <div class="matching-column matching-column-right">
+
+                    <div class="matching-column-title">
+                        LIST B
+                    </div>
+
+                    ${rightItems.map((item, index) => `
+                        <div class="matching-item matching-item-right">
+
+                            <span class="matching-letter matching-option-letter">
+                                ${String.fromCharCode(65 + index)}
+                            </span>
+
+                            <span class="matching-item-text">
+                                ${Utils.escapeHTML(String(item))}
+                            </span>
+
+                        </div>
+                    `).join("")}
+
+                </div>
+
+            </div>
+        `;
     },
 
 
@@ -543,9 +785,7 @@ const GameView = {
                         : "QUESTION"}
                 </div>
 
-                <div class="question-text">
-                    ${Utils.escapeHTML(question.question)}
-                </div>
+                ${this.renderQuestionContent(question)}
 
                 ${this.renderMultipleChoiceOptions(question)}
 
@@ -621,9 +861,7 @@ const GameView = {
                     ✓ ANSWER ACCEPTED
                 </div>
 
-                <div class="question-text">
-                    ${Utils.escapeHTML(question.question)}
-                </div>
+                ${this.renderQuestionContent(question)}
 
                 ${this.renderMultipleChoiceOptions(question)}
 
@@ -690,9 +928,7 @@ const GameView = {
                     ⚖ NEUTRAL REVIEW
                 </div>
 
-                <div class="question-text">
-                    ${Utils.escapeHTML(question.question)}
-                </div>
+                ${this.renderQuestionContent(question)}
 
                 ${this.renderMultipleChoiceOptions(question)}
 

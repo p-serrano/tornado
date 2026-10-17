@@ -1,0 +1,612 @@
+/* =========================================================
+   TORNADO — QUESTION TYPES
+   PUNK CHAOS × COMIC PANELS
+   DESIGNED FOR DIGITAL WHITEBOARDS
+========================================================= */
+
+/* =========================================================
+   MATCHING — TWO-COLUMN COMIC LAYOUT
+========================================================= */
+
+.matching-questions {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+    gap: 28px;
+
+    width: 100%;
+    margin: 0;
+    align-items: start;
+}
+
+.matching-column {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+
+    min-width: 0;
+}
+
+/* ---------------------------------------------------------
+   COLUMN TITLES
+--------------------------------------------------------- */
+
+.matching-column-title {
+    align-self: flex-start;
+
+    margin-bottom: 4px;
+    padding: 8px 14px;
+
+    border: 3px solid var(--ink);
+    box-shadow: 4px 4px 0 var(--ink);
+
+    background: var(--ink);
+    color: var(--soft-lilac);
+
+    font-family: var(--font-ui);
+    font-size: 1.3rem;
+    font-weight: 900;
+
+    letter-spacing: .08em;
+    text-transform: uppercase;
+
+    transform: rotate(-2deg);
+}
+
+/* ---------------------------------------------------------
+   MATCHING ITEMS
+--------------------------------------------------------- */
+
+.matching-item {
+    display: flex;
+    align-items: center;
+    gap: 18px;
+
+    width: 100%;
+    min-width: 0;
+    min-height: 82px;
+    padding: 16px 18px;
+
+    border: 3px solid var(--ink);
+    box-shadow: 5px 5px 0 var(--ink);
+
+    color: var(--ink);
+
+    font-family: var(--font-display);
+    font-size: clamp(1.5rem, 2.1vw, 2.3rem);
+    line-height: 1.2;
+
+    overflow-wrap: anywhere;
+}
+
+/* Left column */
+
+.matching-item-left {
+    background: var(--soft-blue);
+}
+
+/* Right column */
+
+.matching-item-right {
+    background: var(--soft-yellow, #fff09a);
+}
+
+/* ---------------------------------------------------------
+   NUMBER / LETTER LABELS
+--------------------------------------------------------- */
+
+.matching-letter {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 48px;
+
+    width: 48px;
+    height: 48px;
+
+    border: 3px solid var(--ink);
+    box-shadow: 3px 3px 0 var(--ink);
+
+    color: var(--ink);
+
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    font-weight: 900;
+}
+
+/* ---------------------------------------------------------
+   LEFT NUMBERS — PINK / BLUE / YELLOW / GREEN
+--------------------------------------------------------- */
+
+.matching-item-left:nth-of-type(4n + 2) .matching-number {
+    background: var(--electric-pink);
+    transform: rotate(-5deg);
+}
+
+.matching-item-left:nth-of-type(4n + 3) .matching-number {
+    background: var(--electric-blue);
+    transform: rotate(4deg);
+}
+
+.matching-item-left:nth-of-type(4n + 4) .matching-number {
+    background: var(--acid-yellow);
+    transform: rotate(-3deg);
+}
+
+.matching-item-left:nth-of-type(4n + 5) .matching-number {
+    background: var(--acid-green, #b6ff00);
+    transform: rotate(5deg);
+}
+
+/* ---------------------------------------------------------
+   RIGHT LETTERS — PINK / BLUE / YELLOW / GREEN
+--------------------------------------------------------- */
+
+.matching-item-right:nth-of-type(4n + 2) .matching-option-letter {
+    background: var(--electric-pink);
+    transform: rotate(-5deg);
+}
+
+.matching-item-right:nth-of-type(4n + 3) .matching-option-letter {
+    background: var(--electric-blue);
+    transform: rotate(4deg);
+}
+
+.matching-item-right:nth-of-type(4n + 4) .matching-option-letter {
+    background: var(--acid-yellow);
+    transform: rotate(-3deg);
+}
+
+.matching-item-right:nth-of-type(4n + 5) .matching-option-letter {
+    background: var(--acid-green, #b6ff00);
+    transform: rotate(5deg);
+}
+
+/* ---------------------------------------------------------
+   ITEM TEXT
+--------------------------------------------------------- */
+
+.matching-item-text {
+    flex: 1;
+    min-width: 0;
+}
+
+/* ---------------------------------------------------------
+   RESPONSIVE
+--------------------------------------------------------- */
+
+@media (max-width: 700px) {
+    .matching-questions {
+        gap: 12px;
+    }
+
+    .matching-column {
+        gap: 10px;
+    }
+
+    .matching-item {
+        gap: 10px;
+        min-height: 64px;
+        padding: 12px;
+        font-size: clamp(1.15rem, 3.2vw, 1.6rem);
+        box-shadow: 3px 3px 0 var(--ink);
+    }
+
+    .matching-letter {
+        flex-basis: 36px;
+        width: 36px;
+        height: 36px;
+        font-size: 1.4rem;
+    }
+
+    .matching-column-title {
+        font-size: 1rem;
+    }
+}
+
+
+/* =========================================================
+   MULTIPLE CHOICE
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   OPTIONS GRID
+--------------------------------------------------------- */
+
+.multiple-choice-options {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    gap: 22px;
+
+    width: 100%;
+
+}
+
+
+/* ---------------------------------------------------------
+   OPTION PANEL
+--------------------------------------------------------- */
+
+.multiple-choice-option {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+
+    gap: 22px;
+
+    min-width: 0;
+    min-height: 110px;
+
+    padding: 24px 28px;
+
+    border: 4px solid var(--ink);
+    border-radius: 0;
+
+    background: var(--soft-lilac);
+    color: var(--ink);
+
+    box-shadow: 7px 7px 0 var(--electric-pink);
+
+    transition:
+        transform var(--transition-fast),
+        box-shadow var(--transition-fast),
+        background-color var(--transition-fast);
+}
+
+
+/* ---------------------------------------------------------
+   COMIC PANEL VARIATION
+--------------------------------------------------------- */
+
+.multiple-choice-option:nth-child(4n + 1) {
+    box-shadow: 7px 7px 0 var(--electric-pink);
+}
+
+.multiple-choice-option:nth-child(4n + 2) {
+    box-shadow: 7px 7px 0 var(--electric-blue);
+}
+
+.multiple-choice-option:nth-child(4n + 3) {
+    box-shadow: 7px 7px 0 var(--acid-yellow);
+}
+
+.multiple-choice-option:nth-child(4n) {
+    box-shadow: 7px 7px 0 var(--soft-green);
+}
+
+
+/* ---------------------------------------------------------
+   OPTION HOVER
+--------------------------------------------------------- */
+
+.multiple-choice-option:hover {
+    background: var(--acid-yellow);
+
+    transform: translate(-3px, -3px);
+
+    box-shadow: 10px 10px 0 var(--ink);
+}
+
+
+/* ---------------------------------------------------------
+   OPTION LETTER
+--------------------------------------------------------- */
+
+.multiple-choice-letter {
+    position: relative;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    flex: 0 0 60px;
+
+    width: 60px;
+    height: 60px;
+
+    border: 4px solid var(--ink);
+    border-radius: 0;
+
+    background: var(--acid-yellow);
+    color: var(--ink);
+
+    font-family: var(--font-display);
+    font-size: 2.2rem;
+    font-weight: 900;
+
+    box-shadow: 4px 4px 0 var(--ink);
+}
+
+
+/* ---------------------------------------------------------
+   COMIC LETTERS — INDIVIDUAL COLORS & TILTS
+--------------------------------------------------------- */
+
+/* A — PINK */
+.multiple-choice-option:nth-child(4n + 1) .multiple-choice-letter {
+    background: var(--electric-pink);
+    transform: rotate(-5deg);
+}
+
+/* B — ELECTRIC BLUE */
+.multiple-choice-option:nth-child(4n + 2) .multiple-choice-letter {
+    background: var(--electric-blue);
+    transform: rotate(3deg);
+}
+
+/* C — ACID YELLOW */
+.multiple-choice-option:nth-child(4n + 3) .multiple-choice-letter {
+    background: var(--soft-yellow, #faff00);
+    transform: rotate(7deg);
+}
+
+/* D — GREEN */
+.multiple-choice-option:nth-child(4n) .multiple-choice-letter {
+    background: var(--acid-green, #b6ff00);
+    transform: rotate(-10deg);
+}
+
+
+/* ---------------------------------------------------------
+   OPTION TEXT
+--------------------------------------------------------- */
+
+.multiple-choice-text {
+    min-width: 0;
+
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: clamp(1.8rem, 3.6vw, 4rem);
+    font-weight: 200;
+
+    line-height: 1.3;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   QUESTION ACTIVITY TYPE
+========================================================= */
+
+.question-activity-type {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+
+    width: fit-content;
+    max-width: 100%;
+
+    margin: 0 auto 0px;
+    padding: 12px 20px;
+
+    border: 3px solid var(--ink);
+    border-radius: 0;
+
+    background: var(--electric-pink);
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: 1.35rem;
+    font-weight: 900;
+
+    letter-spacing: .04em;
+    text-transform: uppercase;
+
+    box-shadow: 6px 6px 0 var(--acid-yellow);
+
+    transform: rotate(-2deg);
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   QUESTION INSTRUCTIONS
+========================================================= */
+
+.question-instructions {
+    max-width: 1000px;
+
+    margin: 0 auto 0;
+    padding: 0px 26px;
+
+    background: rgb(255 255 255 / 6%);
+    color: var(--ink);
+
+    font-family: var(--font-ui);
+    font-size: clamp(1.35rem, 4vw, 4rem);
+    font-weight: 400;
+
+    text-align: left;
+
+    overflow-wrap: anywhere;
+}
+
+
+/* =========================================================
+   QUESTION CONTENT CONTAINER — QUESTION ZONE
+========================================================= */
+
+.game-question-card .question-content-container {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+
+    width: 100%;
+    min-width: 0;
+    padding: 32px 24px 24px;
+
+    border: 3px dashed var(--ink);
+
+    background: var(--soft-lilac);
+    color: var(--ink);
+
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease;
+}
+
+
+/* =========================================================
+   QUESTION META ROW — TYPE + INSTRUCTIONS
+========================================================= */
+
+.game-question-card .question-meta-row {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 12px 20px;
+
+    width: 100%;
+    min-width: 0;
+}
+
+/* Activity type */
+
+.game-question-card .question-meta-row .question-activity-type {
+    flex: 0 0 auto;
+    margin: 0;
+}
+
+/* Instructions */
+
+.game-question-card .question-meta-row .question-instructions {
+    flex: 1 1 300px;
+    min-width: 0;
+    margin: 0;
+
+    text-align: left;
+}
+
+
+/* =========================================================
+   QUESTION ZONE LABEL
+========================================================= */
+
+.game-question-card .question-content-container::before {
+    content: "✳ QUESTION ZONE";
+
+    position: absolute;
+    top: -22px;
+    right: 20px;
+
+    padding: 8px 14px;
+
+    border: 2px dashed var(--soft-lilac);
+
+    background: var(--ink);
+    color: var(--soft-lilac);
+
+    font-family: var(--font-ui);
+    font-size: 1.2rem;
+    font-weight: 900;
+
+    letter-spacing: .04em;
+    text-transform: uppercase;
+}
+
+
+/* =========================================================
+   ACTIVITY TYPE
+========================================================= */
+
+.game-question-card .question-content-container .question-activity-type {
+    align-self: flex-start;
+    margin: 0;
+}
+
+
+/* =========================================================
+   INSTRUCTIONS
+========================================================= */
+
+.game-question-card .question-content-container .question-instructions {
+    margin: 0;
+}
+
+
+/* =========================================================
+   QUESTION CONTENT BODY
+========================================================= */
+
+.game-question-card .question-content-body {
+    width: 100%;
+    min-width: 0;
+}
+
+
+/* =========================================================
+   QUESTION TEXT
+========================================================= */
+
+.game-question-card .question-content-container .question-text {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    width: 100%;
+    min-height: 0;
+    margin-top: 10px;
+    padding: 12px 8px;
+
+    border: none;
+    background: #ffffff;
+    border: 3px dashed var(--ink);
+    color: var(--electric-pink);
+
+    font-family: var(--font-display);
+    font-size: clamp(2.5rem, 4vw, 4.5rem);
+
+    line-height: 1.2;
+    text-align: center;
+
+    overflow-wrap: anywhere;
+    hyphens: auto;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .game-question-card .question-text {
+        transition: none;
+    }
+
+}
+
+
+/* =========================================================
+   KEYBOARD ACCESSIBILITY
+========================================================= */
+
+.multiple-choice-option:focus-within {
+    outline: 4px solid var(--electric-blue);
+    outline-offset: 5px;
+}
+
+
+/* =========================================================
+   REDUCED MOTION
+========================================================= */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .multiple-choice-option {
+        transition: none;
+    }
+
+    .multiple-choice-option:hover {
+        transform: none;
+    }
+
+}

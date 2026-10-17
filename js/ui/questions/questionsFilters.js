@@ -128,7 +128,7 @@ Object.assign(QuestionsView, {
 
                 if (
                     this.filters.type &&
-                    !tags.types.includes(this.filters.type)
+                    question.activityType !== this.filters.type
                 ) {
                     return false;
                 }

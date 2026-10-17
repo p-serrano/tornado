@@ -70,7 +70,10 @@ const QuestionManager = {
     create({
         question,
         answer,
-        tags = {}
+        tags = {},
+        activityType = "Grammar Challenge",
+        instructions = "",
+        matchingPairs
     }) {
 
         const data = Storage.getData();
@@ -82,6 +85,29 @@ const QuestionManager = {
             question: question.trim(),
 
             answer: answer.trim(),
+
+            activityType:
+                typeof activityType === "string" && activityType.trim()
+                    ? activityType.trim()
+                    : "Grammar Challenge",
+
+            instructions:
+                typeof instructions === "string"
+                    ? instructions.trim()
+                    : "",
+
+            // Preserve matching pairs when provided.
+            ...(matchingPairs &&
+                Array.isArray(matchingPairs.left) &&
+                Array.isArray(matchingPairs.right)
+                    ? {
+                        matchingPairs: {
+                            left: [...matchingPairs.left],
+                            right: [...matchingPairs.right]
+                        }
+                    }
+                    : {}
+            ),
 
             tags: this.normalizeTags(tags)
 

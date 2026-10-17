@@ -8,6 +8,8 @@ const App = {
         GrammarPastSimple.install();
         GrammarPronounsToBeHave.install();
 
+        StarterPackSync.removeLegacyDemoEnglish();
+
         this.render();
 
     },

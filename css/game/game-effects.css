@@ -536,7 +536,7 @@
 
 /* =========================================================
    TORNADO — PROGRESSIVE ALERT COLOURS
-   ========================================================= */
+========================================================= */
 
 /* LEVEL 1 — YELLOW */
 
@@ -655,13 +655,14 @@
 
 }
 
-/* ACCESSIBILITY */
+
+/* DESTROYER ACCESSIBILITY */
 
 @media (prefers-reduced-motion: reduce) {
 
     .game-alert[data-alert-level="6"],
     .game-alert.is-destroyer {
-        animation: none;
+        animation: none !important;
     }
 
 }
@@ -722,7 +723,7 @@
 }
 
 
-/* ACCESSIBILITY */
+/* ALERT ACCESSIBILITY */
 
 @media (prefers-reduced-motion: reduce) {
     .game-alert *,
@@ -776,13 +777,11 @@
     animation: warning-pulse-1 2.4s ease-in-out infinite;
 }
 
-
 /* WARNING LEVEL 2 — Noticeable pulse */
 
 .game-alert[data-alert-level="2"] {
     animation: warning-pulse-2 1.8s ease-in-out infinite;
 }
-
 
 /* WARNING LEVEL 3 — Intense pulse */
 
@@ -790,11 +789,9 @@
     animation: warning-pulse-3 1.1s ease-in-out infinite;
 }
 
-
 /* WARNING LEVEL 4 — Emergency pulse */
 
-.game-alert[data-alert-level="4"],
-.game-alert.is-destroyer {
+.game-alert[data-alert-level="4"] {
     animation: warning-pulse-4 650ms ease-in-out infinite;
 }
 
@@ -815,7 +812,6 @@
     }
 }
 
-
 @keyframes warning-pulse-2 {
     0%, 100% {
         box-shadow:
@@ -830,7 +826,6 @@
     }
 }
 
-
 @keyframes warning-pulse-3 {
     0%, 100% {
         box-shadow:
@@ -844,7 +839,6 @@
             0 0 18px 5px rgb(255 60 172 / 65%);
     }
 }
-
 
 @keyframes warning-pulse-4 {
     0%, 100% {
@@ -1001,8 +995,141 @@
 
 }
 
+
 /* =========================================================
-   TURN TRANSITION OVERLAY
+   12. SYSTEMS BACK TO NORMAL OVERLAY
+========================================================= */
+
+.normal-status-overlay {
+    position: fixed;
+    inset: 0;
+    z-index: 10001;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: 24px;
+
+    background: rgba(18, 15, 25, 0.92);
+    backdrop-filter: blur(8px);
+
+    animation: normal-status-appear 250ms ease-out both;
+}
+
+.normal-status-content {
+    width: min(760px, 100%);
+
+    padding: clamp(32px, 6vw, 64px) 24px;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    text-align: center;
+
+    color: var(--ink);
+    background: #c9f7a5;
+
+    border: 4px solid var(--ink);
+    box-shadow: 12px 12px 0 var(--ink);
+
+    animation: normal-status-impact 600ms cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+.normal-status-icon {
+    width: 76px;
+    height: 76px;
+
+    display: grid;
+    place-items: center;
+
+    margin-bottom: 24px;
+
+    border: 4px solid var(--ink);
+    border-radius: 50%;
+
+    background: var(--ink);
+    color: #c9f7a5;
+
+    font-size: 3rem;
+    font-weight: 900;
+}
+
+.normal-status-eyebrow {
+    font-family: var(--font-ui);
+    font-size: 0.85rem;
+    font-weight: 900;
+    letter-spacing: 0.2em;
+}
+
+.normal-status-content h2 {
+    margin: 18px 0;
+
+    font-family: var(--font-ui);
+    font-size: clamp(2rem, 7vw, 4.5rem);
+    font-weight: 1000;
+    line-height: 1;
+    letter-spacing: -0.05em;
+    text-transform: uppercase;
+}
+
+.normal-status-content p {
+    margin: 8px 0 0;
+
+    font-family: var(--font-ui);
+    font-size: clamp(0.9rem, 2vw, 1.1rem);
+    font-weight: 700;
+}
+
+@keyframes normal-status-appear {
+    from {
+        opacity: 0;
+    }
+
+    to {
+        opacity: 1;
+    }
+}
+
+@keyframes normal-status-impact {
+    0% {
+        opacity: 0;
+        transform: scale(0.7);
+    }
+
+    70% {
+        opacity: 1;
+        transform: scale(1.04);
+    }
+
+    100% {
+        opacity: 1;
+        transform: scale(1);
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .normal-status-overlay,
+    .normal-status-content {
+        animation: none !important;
+    }
+}
+
+@media (max-width: 480px) {
+    .normal-status-overlay {
+        padding: 16px;
+    }
+
+    .normal-status-content {
+        padding: 36px 16px;
+        box-shadow: 7px 7px 0 var(--ink);
+    }
+}
+
+
+/* =========================================================
+   13. TURN TRANSITION OVERLAY
 ========================================================= */
 
 .turn-transition-overlay {
@@ -1023,9 +1150,7 @@
 }
 
 
-/* ---------------------------------------------------------
-   MAIN CONTENT
---------------------------------------------------------- */
+/* MAIN CONTENT */
 
 .turn-transition-content {
     width: min(760px, 100%);
@@ -1056,9 +1181,7 @@
 }
 
 
-/* ---------------------------------------------------------
-   EYEBROW
---------------------------------------------------------- */
+/* EYEBROW */
 
 .turn-transition-eyebrow {
     font-family: var(--font-ui);
@@ -1068,9 +1191,7 @@
 }
 
 
-/* ---------------------------------------------------------
-   NEXT TURN
---------------------------------------------------------- */
+/* NEXT TURN */
 
 .turn-transition-heading {
     margin-top: 16px;
@@ -1087,9 +1208,7 @@
 }
 
 
-/* ---------------------------------------------------------
-   DECORATIVE DIVIDER
---------------------------------------------------------- */
+/* DECORATIVE DIVIDER */
 
 .turn-transition-divider {
     display: flex;
@@ -1114,9 +1233,7 @@
 }
 
 
-/* ---------------------------------------------------------
-   TEAM NAME
---------------------------------------------------------- */
+/* TEAM NAME */
 
 .turn-transition-label {
     margin-bottom: 10px;
@@ -1152,9 +1269,7 @@
 }
 
 
-/* ---------------------------------------------------------
-   FOOTER
---------------------------------------------------------- */
+/* FOOTER */
 
 .turn-transition-footer {
     margin-top: 28px;
@@ -1166,9 +1281,7 @@
 }
 
 
-/* ---------------------------------------------------------
-   ANIMATIONS
---------------------------------------------------------- */
+/* ANIMATIONS */
 
 @keyframes turn-overlay-appear {
     from {
@@ -1212,9 +1325,7 @@
 }
 
 
-/* ---------------------------------------------------------
-   ACCESSIBILITY
---------------------------------------------------------- */
+/* ACCESSIBILITY */
 
 @media (prefers-reduced-motion: reduce) {
     .turn-transition-overlay,
@@ -1225,9 +1336,7 @@
 }
 
 
-/* ---------------------------------------------------------
-   SMALL SCREENS
---------------------------------------------------------- */
+/* SMALL SCREENS */
 
 @media (max-width: 480px) {
     .turn-transition-overlay {
@@ -1241,5 +1350,25 @@
 
     .turn-transition-footer {
         font-size: 0.75rem;
+    }
+}
+
+
+/* =========================================================
+   DESTROYER ANIMATION PRIORITY
+========================================================= */
+
+/*
+   Keep DESTROYER's dedicated animation even when it also
+   has data-alert-level="4".
+*/
+
+.game-alert.is-destroyer {
+    animation: destroyerAlert 0.7s steps(2, end) infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .game-alert.is-destroyer {
+        animation: none !important;
     }
 }
