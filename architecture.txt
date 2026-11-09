@@ -1,17 +1,35 @@
 Listado de rutas de carpetas para el volumen OS
 El número de serie del volumen es EC77-A371
 C:.
+¦   .gitignore
 ¦   architecture.txt
 ¦   index.html
 ¦   README.md
 ¦   
++---assets
+¦   +---images
+¦           tornado-logo-horizontal.png
+¦           tornado-logo.png
+¦           
 +---css
-¦       base.css
-¦       game.css
-¦       layout.css
-¦       setup.css
-¦       variables.css
-¦       
+¦   ¦   base.css
+¦   ¦   home.css
+¦   ¦   howToPlay.css
+¦   ¦   layout.css
+¦   ¦   questions.css
+¦   ¦   questionsAutocomplete.css
+¦   ¦   questionSets.css
+¦   ¦   questionsResponsive.css
+¦   ¦   questionsTypes.css
+¦   ¦   setup.css
+¦   ¦   variables.css
+¦   ¦   
+¦   +---game
+¦           game-board.css
+¦           game-effects.css
+¦           game-layout.css
+¦           game.css
+¦           
 +---js
     +---core
     ¦       appState.js
@@ -19,18 +37,43 @@ C:.
     ¦       utils.js
     ¦       
     +---data
-    ¦       defaultQuestions.js
+    ¦       grammarFutureSimple.js
+    ¦       grammarGerundsInfinitives.js
+    ¦       grammarMixedFutures.js
+    ¦       grammarPastPerfectSimple.js
+    ¦       grammarPastSimple.js
+    ¦       grammarPastSimpleVsPastPerfect.js
+    ¦       grammarPastSimpleVsPresentPerfect.js
+    ¦       grammarPasttPerfectContinuous.js
+    ¦       grammarPresentPerfectSimple.js
+    ¦       grammarPresentSimple.js
+    ¦       grammarPronounsToBeHave.js
+    ¦       grammarRelativeClauses.js
+    ¦       grammarSecondThirdConditionals.js
+    ¦       grammarZeroFirstConditionals .js
+    ¦       starterPackSync.js
     ¦       
     +---managers
     ¦       gameManager.js
     ¦       questionManager.js
+    ¦       questionMigration.js
     ¦       questionSetManager.js
     ¦       teamManager.js
     ¦       
     +---ui
-            app.js
-            gameView.js
-            homeView.js
-            resultsView.js
-            setupView.js
-            
+        ¦   app.js
+        ¦   gameMessageView.js
+        ¦   gameView.js
+        ¦   homeView.js
+        ¦   howToPlayView.js
+        ¦   resultsView.js
+        ¦   setupView.js
+        ¦   
+        +---questions
+                questionsAutocomplete.js
+                questionSetsView.js
+                questionsFilters.js
+                questionsForm.js
+                questionsView.js
+                questionTagCatalog.js
+                

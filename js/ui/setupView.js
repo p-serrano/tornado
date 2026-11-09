@@ -50,17 +50,84 @@ const SetupView = {
                                 <h2>THE BASICS</h2>
                             </div>
 
-                            <label class="setup-field" for="gameName">
-                                <span>GAME NAME</span>
+                            <!-- CEFR LEVEL SELECTOR -->
 
-                                <input
-                                    id="gameName"
-                                    type="text"
-                                    value="Tornado Game"
-                                    maxlength="80"
-                                    autocomplete="off"
-                                >
-                            </label>
+                            <div class="setup-level-selector">
+
+                                <div class="setup-level-heading">
+                                    <span>QUESTION LEVELS</span>
+                                    <small>Select one or more levels</small>
+                                </div>
+
+                                <div class="setup-level-options">
+
+                                    <label class="setup-level-option">
+                                        <input
+                                            type="checkbox"
+                                            name="cefrLevels"
+                                            value="A1"
+                                        >
+                                        <span class="setup-level-card">
+                                            <strong>A1</strong>
+                                            <small>Beginner</small>
+                                        </span>
+                                    </label>
+
+                                    <label class="setup-level-option">
+                                        <input
+                                            type="checkbox"
+                                            name="cefrLevels"
+                                            value="A2"
+                                        >
+                                        <span class="setup-level-card">
+                                            <strong>A2</strong>
+                                            <small>Elementary</small>
+                                        </span>
+                                    </label>
+
+                                    <label class="setup-level-option">
+                                        <input
+                                            type="checkbox"
+                                            name="cefrLevels"
+                                            value="B1"
+                                        >
+                                        <span class="setup-level-card">
+                                            <strong>B1</strong>
+                                            <small>Intermediate</small>
+                                        </span>
+                                    </label>
+
+                                    <label class="setup-level-option">
+                                        <input
+                                            type="checkbox"
+                                            name="cefrLevels"
+                                            value="B2"
+                                        >
+                                        <span class="setup-level-card">
+                                            <strong>B2</strong>
+                                            <small>Upper-intermediate</small>
+                                        </span>
+                                    </label>
+
+                                    <label class="setup-level-option">
+                                        <input
+                                            type="checkbox"
+                                            name="cefrLevels"
+                                            value="C1"
+                                        >
+                                        <span class="setup-level-card">
+                                            <strong>C1</strong>
+                                            <small>Advanced</small>
+                                        </span>
+                                    </label>
+
+                                </div>
+
+                                <p class="setup-level-hint">
+                                    Only questions matching your selected levels will appear.
+                                </p>
+
+                            </div>
 
 
                             <div class="setup-section-heading">
@@ -633,9 +700,6 @@ const SetupView = {
 
     startGame() {
 
-        const name =
-            document.getElementById("gameName").value.trim();
-
         const selectedMode =
             document.querySelector('input[name="mode"]:checked');
 
@@ -645,31 +709,48 @@ const SetupView = {
 
         const mode = selectedMode.value;
 
+
+        // ---------------------------------------------------------
+        // SELECTED CEFR LEVELS
+        // ---------------------------------------------------------
+
+        const selectedLevels = [
+            ...document.querySelectorAll(
+                'input[name="cefrLevels"]:checked'
+            )
+        ].map(input => input.value);
+
+        if (selectedLevels.length === 0) {
+
+            GameMessageView.error(
+                "CHOOSE YOUR LEVELS",
+                "Select at least one CEFR level before starting the game."
+            );
+
+            return;
+
+        }
+
+
+        // ---------------------------------------------------------
+        // QUESTION SET
+        // ---------------------------------------------------------
+
         const questionSetId =
             mode === "questions"
                 ? document.getElementById("questionSet").value
                 : null;
 
 
+        // ---------------------------------------------------------
+        // TEAM NAMES
+        // ---------------------------------------------------------
+
         const teamNames = [
             ...document.querySelectorAll("#teams .team-input")
         ]
             .map(input => input.value.trim())
             .filter(Boolean);
-
-
-        if (!name) {
-
-            GameMessageView.error(
-                "MISSING GAME NAME",
-                "Every legendary game needs a name. Enter one to continue!"
-            );
-
-            document.getElementById("gameName").focus();
-
-            return;
-
-        }
 
 
         if (teamNames.length < 2) {
@@ -684,12 +765,17 @@ const SetupView = {
         }
 
 
+        // ---------------------------------------------------------
+        // VALIDATE QUESTION SET AND CEFR LEVEL AVAILABILITY
+        // ---------------------------------------------------------
+
         if (mode === "questions") {
 
             const selectedSet = QuestionSetManager
                 .getAll()
                 .find(set => set.id === questionSetId);
 
+            // No question set selected
             if (!selectedSet) {
 
                 GameMessageView.error(
@@ -712,27 +798,94 @@ const SetupView = {
 
             }
 
+            // Get the questions belonging to the selected set
+            const questions = QuestionManager.getBySetId(questionSetId);
+
+            // Count questions compatible with the selected CEFR levels
+            const availableQuestions = questions.filter(question => {
+
+                const questionLevels = question.tags?.cefr;
+
+                if (!Array.isArray(questionLevels)) {
+                    return false;
+                }
+
+                return questionLevels.some(level =>
+                    selectedLevels.includes(level)
+                );
+
+            });
+
+            // No questions available for the selected levels
+            if (availableQuestions.length === 0) {
+
+                GameMessageView.error(
+                    "NO QUESTIONS AVAILABLE!",
+                    `The question set "${selectedSet.name}" has no questions for the selected levels: ${selectedLevels.join(", ")}. Choose different levels or another question set.`
+                );
+
+                return;
+
+            }
+
+            // Warn if the question pool is small
+            if (availableQuestions.length < 5) {
+
+                GameMessageView.error(
+                    "LOW QUESTION COUNT!",
+                    `Only ${availableQuestions.length} question(s) match the selected levels (${selectedLevels.join(", ")}). You can continue, but the game may run out of questions quickly.`
+                );
+
+                return;
+
+            }
+
         }
 
+
+        // ---------------------------------------------------------
+        // GRID SIZE
+        // ---------------------------------------------------------
 
         const gridSize =
             Number(document.getElementById("gridSize").value);
 
+
+        // ---------------------------------------------------------
+        // CREATE TEAMS
+        // ---------------------------------------------------------
 
         const teams = teamNames.map(teamName =>
             TeamManager.create(teamName)
         );
 
 
+        // ---------------------------------------------------------
+        // CREATE GAME
+        // ---------------------------------------------------------
+
         const game = GameManager.create({
-            name,
+
+            name: `Tornado — ${selectedLevels.join(", ")}`,
+
             mode,
+
             questionSetId,
+
+            cefrLevels: selectedLevels,
+
             teams,
+
             rows: gridSize,
+
             columns: gridSize
+
         });
 
+
+        // ---------------------------------------------------------
+        // NAVIGATE TO GAME
+        // ---------------------------------------------------------
 
         AppState.goTo("game", game.id);
 

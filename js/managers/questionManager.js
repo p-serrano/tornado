@@ -253,17 +253,46 @@ const QuestionManager = {
     // GET RANDOM QUESTION
     // -----------------------------------------------------
 
-    getRandom(setId, usedIds = []) {
+    getRandom(setId, usedIds = [], cefrLevels = null) {
 
-        const questions = this.getBySetId(setId)
-            .filter(question =>
-                !usedIds.includes(question.id)
-            );
+        let questions = this.getBySetId(setId);
+
+        // FILTER BY SELECTED CEFR LEVELS
+        if (Array.isArray(cefrLevels) && cefrLevels.length > 0) {
+
+            questions = questions.filter(question => {
+
+                const questionLevels = question.tags?.cefr;
+
+                // Questions without valid CEFR tags are excluded
+                // when a level filter is active.
+                if (
+                    !Array.isArray(questionLevels) ||
+                    questionLevels.length === 0
+                ) {
+                    return false;
+                }
+
+                // Include the question if at least one of its
+                // CEFR levels has been selected.
+                return questionLevels.some(level =>
+                    cefrLevels.includes(level)
+                );
+
+            });
+
+        }
+
+        // EXCLUDE QUESTIONS ALREADY USED
+        questions = questions.filter(question =>
+            !usedIds.includes(question.id)
+        );
 
         if (!questions.length) {
             return null;
         }
 
+        // SELECT A RANDOM QUESTION
         return questions[
             Math.floor(Math.random() * questions.length)
         ];

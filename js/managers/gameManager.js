@@ -3,6 +3,7 @@ const GameManager = {
         name,
         mode,
         questionSetId = null,
+        cefrLevels,
         teams,
         rows = 5,
         columns = 5
@@ -12,6 +13,7 @@ const GameManager = {
             name: name.trim(),
             mode,
             questionSetId,
+            cefrLevels: [...cefrLevels],
             teams,
 
             grid: {

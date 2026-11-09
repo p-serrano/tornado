@@ -529,10 +529,6 @@ const GameView = {
         let leftItems = [];
         let rightItems = [];
 
-        // -----------------------------------------------------
-        // NEW FORMAT: EXPLICIT MATCHING PAIRS
-        // -----------------------------------------------------
-
         console.log("MATCHING QUESTION DATA:", {
             id: question?.id,
             sourceId: question?.sourceId,
@@ -542,26 +538,28 @@ const GameView = {
             question: question?.question
         });
 
+        // -----------------------------------------------------
+        // FORMAT 1: EXPLICIT MATCHING PAIRS
+        // -----------------------------------------------------
+
         if (
             question?.matchingPairs &&
             Array.isArray(question.matchingPairs.left) &&
             Array.isArray(question.matchingPairs.right)
         ) {
-
             leftItems = question.matchingPairs.left;
             rightItems = question.matchingPairs.right;
-
         }
 
         // -----------------------------------------------------
-        // LEGACY FORMAT: PARSE QUESTION TEXT
+        // FORMAT 2: PARSE THE QUESTION TEXT
         // -----------------------------------------------------
 
         else {
 
             const rawText = String(question?.question || "");
 
-            // Support both real line breaks and literal "\n".
+            // Support real line breaks and literal "\n".
             const normalizedText = rawText.replace(/\\n/g, "\n");
 
             const lines = normalizedText
@@ -569,9 +567,9 @@ const GameView = {
                 .map(line => line.trim())
                 .filter(Boolean);
 
-            // Find the first item labelled A., B., C., etc.
+            // Find the first line beginning with A), A., B), B., etc.
             const rightIndex = lines.findIndex(line =>
-                /^[A-Z]\.\s*/.test(line)
+                /^[A-Z]\s*[).]\s+/.test(line)
             );
 
             if (rightIndex !== -1) {
@@ -581,22 +579,28 @@ const GameView = {
 
                 // Extract numbered items from List A.
                 leftItems = leftLines
-                    .join(" ")
-                    .split(/\s*\/\s*/)
+                    .flatMap(line => {
+
+                        // A numbered line starts a new item.
+                        if (/^\d+\s*[).]\s*/.test(line)) {
+                            return [line];
+                        }
+
+                        // Support slash-separated legacy items.
+                        return line.split(/\s*\/\s*/);
+                    })
                     .map(item =>
-                        item.replace(/^\d+\.\s*/, "").trim()
+                        item.replace(/^\d+\s*[).]\s*/, "").trim()
                     )
                     .filter(Boolean);
 
                 // Extract lettered items from List B.
                 rightItems = rightLines
                     .map(item =>
-                        item.replace(/^[A-Z]\.\s*/, "").trim()
+                        item.replace(/^[A-Z]\s*[).]\s*/, "").trim()
                     )
                     .filter(Boolean);
-
             }
-
         }
 
         // -----------------------------------------------------
@@ -615,7 +619,6 @@ const GameView = {
                     Matching pairs could not be loaded.
                 </div>
             `;
-
         }
 
         // -----------------------------------------------------
@@ -679,35 +682,54 @@ const GameView = {
     // =========================================================
 
     renderMultipleChoiceOptions(question) {
+
         if (!this.isMultipleChoice(question)) {
             return "";
         }
 
-        const options = question.tags.custom;
+        const custom = question?.tags?.custom;
 
-        if (!Array.isArray(options) || options.length === 0) {
+        // Support both the legacy array format and the object format.
+        const options = Array.isArray(custom)
+            ? custom
+            : Array.isArray(custom?.options)
+                ? custom.options
+                : [];
+
+        if (options.length === 0) {
+            console.warn(
+                "Multiple Choice question has no valid options:",
+                question
+            );
             return "";
         }
 
         return `
             <div class="multiple-choice-options">
+                ${options.map((option, index) => {
 
-                ${options.map((option, index) => `
-                    <div class="multiple-choice-option">
+                    // Support strings and objects containing option text.
+                    const optionText = typeof option === "string"
+                        ? option
+                        : option?.text ?? "";
 
-                        <span class="multiple-choice-letter">
-                            ${String.fromCharCode(65 + index)}
-                        </span>
+                    // Remove an existing A), A., B), B., etc.
+                    const cleanOption = optionText
+                        .replace(/^[A-D]\s*[).]\s*/, "")
+                        .trim();
 
-                        <span class="multiple-choice-text">
-                            ${Utils.escapeHTML(
-                                option.replace(/^[A-D]\)\s*/, "")
-                            )}
-                        </span>
+                    return `
+                        <div class="multiple-choice-option">
+                            <span class="multiple-choice-letter">
+                                ${String.fromCharCode(65 + index)}
+                            </span>
 
-                    </div>
-                `).join("")}
-
+                            <span class="multiple-choice-text">
+                                ${Utils.escapeHTML(cleanOption)}
+                            </span>
+                        </div>
+                    `;
+                }).join("")}
             </div>
         `;
     },
@@ -746,7 +768,8 @@ const GameView = {
         if (!question) {
             question = QuestionManager.getRandom(
                 this.game.questionSetId,
-                this.game.usedQuestionIds
+                this.game.usedQuestionIds,
+                this.game.cefrLevels
             );
 
             if (!question) {
@@ -754,7 +777,8 @@ const GameView = {
 
                 question = QuestionManager.getRandom(
                     this.game.questionSetId,
-                    []
+                    [],
+                    this.game.cefrLevels
                 );
             }
 

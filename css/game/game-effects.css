@@ -371,7 +371,7 @@
     position: relative;
 
     width: 100%;
-    max-width: 1100px;
+    max-width: auto;
 
     margin: 0 auto 18px;
     padding: 12px 16px;

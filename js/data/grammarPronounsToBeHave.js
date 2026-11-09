@@ -3,7 +3,7 @@
    PRONOUNS, TO BE & HAVE GOT
 ========================================================= */
 
-const GrammarPronounsToBeHave = {
+window.GrammarPronounsToBeHave = {
 
     id: "starter_grammar_pronouns_to_be_have",
 

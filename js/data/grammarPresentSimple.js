@@ -3,7 +3,7 @@
    PRESENT SIMPLE
 ========================================================= */
 
-const GrammarPresentSimple = {
+window.GrammarPresentSimple = {
 
     id: "starter_grammar_present_simple",
 

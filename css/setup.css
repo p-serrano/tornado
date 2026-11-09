@@ -128,7 +128,7 @@ user-select: none;
     flex-direction: column;
 
     width: 100%;
-    max-width: 1100px;
+    max-width: auto;
 
     margin: auto;
 }
@@ -381,6 +381,375 @@ user-select: none;
     outline-offset: 2px;
 }
 
+/* =========================================================
+   TORNADO — CEFR LEVEL SELECTOR
+   BEAUTIFUL CHAOS
+========================================================= */
+
+
+/* ---------------------------------------------------------
+   SELECTOR CONTAINER
+--------------------------------------------------------- */
+
+.setup-level-selector {
+    width: 100%;
+    margin-bottom: 28px;
+}
+
+
+/* ---------------------------------------------------------
+   HEADING
+--------------------------------------------------------- */
+
+.setup-level-heading {
+    display: flex;
+    flex-direction: column;
+
+    gap: 5px;
+
+    margin-bottom: 14px;
+}
+
+
+.setup-level-heading > span {
+    color: var(--acid-yellow);
+
+    font-family: var(--font-ui);
+    font-size: 1.2rem;
+    font-weight: 900;
+
+    letter-spacing: .08em;
+    text-transform: uppercase;
+}
+
+
+.setup-level-heading small {
+    color: var(--soft-lilac);
+
+    font-family: var(--font-ui);
+    font-size: 1.15rem;
+    line-height: 1.4;
+
+    opacity: .7;
+}
+
+
+/* ---------------------------------------------------------
+   LEVEL GRID
+--------------------------------------------------------- */
+
+.setup-level-options {
+    display: grid;
+    grid-template-columns: repeat(5, minmax(0, 1fr));
+
+    gap: 8px;
+}
+
+
+/* ---------------------------------------------------------
+   LEVEL OPTION
+--------------------------------------------------------- */
+
+.setup-level-option {
+    position: relative;
+
+    display: block;
+
+    min-width: 0;
+
+    cursor: pointer;
+}
+
+
+/* Hide native checkbox but preserve keyboard access */
+
+.setup-level-option input {
+    position: absolute;
+
+    width: 1px;
+    height: 1px;
+
+    padding: 0;
+    margin: -1px;
+
+    overflow: hidden;
+
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+
+    border: 0;
+}
+
+
+/* ---------------------------------------------------------
+   LEVEL CARD
+--------------------------------------------------------- */
+
+.setup-level-card {
+    position: relative;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    gap: 5px;
+
+    min-height: 84px;
+
+    padding: 10px 4px;
+
+    border: 2px solid var(--soft-lilac);
+
+    background: rgb(255 255 255 / 3%);
+    color: var(--soft-lilac);
+
+    text-align: center;
+
+    transition:
+        background-color 160ms ease,
+        color 160ms ease,
+        border-color 160ms ease,
+        transform 160ms ease,
+        box-shadow 160ms ease;
+}
+
+
+/* Small decorative corner marker */
+
+.setup-level-card::before {
+    content: "";
+
+    position: absolute;
+
+    top: 5px;
+    right: 5px;
+
+    width: 6px;
+    height: 6px;
+
+    background: var(--electric-pink);
+
+    opacity: .65;
+
+    transform: rotate(45deg);
+
+    transition:
+        background-color 160ms ease,
+        opacity 160ms ease;
+}
+
+
+/* ---------------------------------------------------------
+   LEVEL LABEL
+--------------------------------------------------------- */
+
+.setup-level-card strong {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 400;
+
+    line-height: 1;
+    letter-spacing: -.03em;
+}
+
+
+/* ---------------------------------------------------------
+   LEVEL DESCRIPTION
+--------------------------------------------------------- */
+
+.setup-level-card small {
+    color: inherit;
+
+    font-family: var(--font-ui);
+    font-size: .95rem;
+    font-weight: 700;
+
+    line-height: 1.2;
+
+    opacity: .7;
+}
+
+
+/* ---------------------------------------------------------
+   HOVER
+--------------------------------------------------------- */
+
+.setup-level-option:hover .setup-level-card {
+    border-color: var(--electric-pink);
+
+    transform: translate(-2px, -2px);
+
+    box-shadow: 3px 3px 0 var(--electric-pink);
+}
+
+
+.setup-level-option:hover .setup-level-card::before {
+    opacity: 1;
+}
+
+
+/* ---------------------------------------------------------
+   SELECTED LEVEL
+--------------------------------------------------------- */
+
+.setup-level-option input:checked + .setup-level-card {
+    border-color: var(--ink);
+
+    background: var(--acid-yellow);
+    color: var(--ink);
+
+    box-shadow: 4px 4px 0 var(--electric-pink);
+
+    transform: translate(-2px, -2px);
+}
+
+
+/* Selected level marker */
+
+.setup-level-option input:checked + .setup-level-card::before {
+    background: var(--electric-pink);
+
+    opacity: 1;
+}
+
+
+/* Selected level name */
+
+.setup-level-option input:checked + .setup-level-card strong {
+    color: var(--ink);
+}
+
+
+/* Selected level description */
+
+.setup-level-option input:checked + .setup-level-card small {
+    color: var(--ink);
+
+    opacity: .8;
+}
+
+
+/* ---------------------------------------------------------
+   KEYBOARD ACCESSIBILITY
+--------------------------------------------------------- */
+
+.setup-level-option input:focus-visible + .setup-level-card {
+    outline: 3px solid var(--electric-blue);
+    outline-offset: 4px;
+}
+
+
+/* ---------------------------------------------------------
+   HELPER TEXT
+--------------------------------------------------------- */
+
+.setup-level-hint {
+    display: flex;
+    align-items: flex-start;
+
+    gap: 8px;
+
+    margin: 16px 0 0;
+
+    color: var(--soft-lilac);
+
+    font-family: var(--font-ui);
+    font-size: 1.1rem;
+    line-height: 1.5;
+
+    opacity: .75;
+}
+
+
+/* Decorative hint marker */
+
+.setup-level-hint::before {
+    content: "↳";
+
+    flex-shrink: 0;
+
+    color: var(--electric-pink);
+
+    font-family: var(--font-ui);
+    font-size: 1.5rem;
+    font-weight: 900;
+    line-height: 1;
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE — TABLETS
+--------------------------------------------------------- */
+
+@media (max-width: 900px) {
+
+    .setup-level-options {
+        gap: 7px;
+    }
+
+
+    .setup-level-card {
+        min-height: 78px;
+    }
+
+
+    .setup-level-card strong {
+        font-size: 2.1rem;
+    }
+
+
+    .setup-level-card small {
+        font-size: .85rem;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   RESPONSIVE — MOBILE
+--------------------------------------------------------- */
+
+@media (max-width: 420px) {
+
+    .setup-level-options {
+        grid-template-columns: repeat(3, minmax(0, 1fr));
+
+        gap: 10px;
+    }
+
+
+    .setup-level-card {
+        min-height: 76px;
+
+        padding: 10px 6px;
+    }
+
+
+    .setup-level-card strong {
+        font-size: 2.2rem;
+    }
+
+
+    .setup-level-card small {
+        font-size: .95rem;
+    }
+
+}
+
+
+/* ---------------------------------------------------------
+   REDUCED MOTION
+--------------------------------------------------------- */
+
+@media (prefers-reduced-motion: reduce) {
+
+    .setup-level-card,
+    .setup-level-card::before {
+        transition: none;
+    }
+
+}
 
 /* ---------------------------------------------------------
    MODE OPTIONS

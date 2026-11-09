@@ -3,7 +3,7 @@
    PAST SIMPLE & IRREGULAR VERBS
 ========================================================= */
 
-const GrammarPastSimple = {
+window.GrammarPastSimple = {
 
     id: "starter_grammar_past_simple",
 

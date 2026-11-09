@@ -1,17 +1,22 @@
 const App = {
 
-    init() {
-
+    async init() {
         AppState.init();
 
-        GrammarPresentSimple.install();
-        GrammarPastSimple.install();
-        GrammarPronounsToBeHave.install();
+        console.log("Tornado: checking starter packs...");
 
-        StarterPackSync.removeLegacyDemoEnglish();
+        try {
+            await PackLoader.loadAndInstallAll();
+
+            console.log("Tornado: starter packs checked.");
+        } catch (error) {
+            console.error(
+                "Tornado: starter pack synchronization failed.",
+                error
+            );
+        }
 
         this.render();
-
     },
 
 
